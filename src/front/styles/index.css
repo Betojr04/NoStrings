@@ -1,3 +1,19 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+.modal-backdrop {
+  position: sticky !important;
+}
+
+.preferenceIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.leftBugerDiv {
+  background: red;
+  width: 400px;
+  height: 300px;
+  overflow-y: auto;
+}
