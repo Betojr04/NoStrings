@@ -32,14 +32,14 @@ def create_account():
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
     has_email = User.query.filter_by(email = email).first()
     if has_email is None:
-        new_user = User(email = email, password = password,)
+        new_user = User(email = email, password = password, is_active = True)
         db.session.add(new_user)
         db.session.commit()
         return jsonify('Successfully Created Account')
     else:
         return jsonify('User already Exists')
 
-#added login routes -- mich
+
 
 @api.route('/Login', methods=['POST'])
 def Login():
