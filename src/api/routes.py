@@ -57,29 +57,29 @@ def Login():
 def validate_identity():
     current_user = get_jwt_identity()
     body = request.get_json(force = True)
-    user = User.query.filter_by(email = email).first()
-    if body['gender'] is not None:
+    user = User.query.filter_by(email = current_user).first()
+    if "gender" in body and body['gender'] is not None:
         user.gender = body['gender']
         db.session.commit()
-    if body['age'] is not None:
+    if "age" in body and body['age'] is not None:
         user.age = body['age']  
         db.session.commit()
-    if body['profilepic'] is not None:
+    if "profilepic" in body and body['profilepic'] is not None:
         user.profile_pic = body['profilepic']
         db.session.commit()
-    if body['location'] is not None:
+    if "location" in body and body['location'] is not None:
         user.location = body['location']
         db.session.commit()
-    if body['intersts'] is not None:
+    if "interests" in body and body['intersts'] is not None:
         user.interests = body['intersts']
         db.session.commit()
-    if body['sexual_interests'] is not None:
+    if "sexualinterests" in body and body['sexual_interests'] is not None:
         user.sexual_interests = body['sexual_interests']
         db.session.commit()
-    if body['isonline'] is not None:
+    if "isonline" in body and body['isonline'] is not None:
         user.is_online = body['isonline']
         db.session.commit()
-    if body['currentplan'] is not None:
+    if "currentplan" in body and body['currentplan'] is not None:
         user.current_plan = body['currentplan']
         db.session.commit()
-    return jsonify(logged_in_as = current_user)         
+    return jsonify("You have successfully updated your profile")         
