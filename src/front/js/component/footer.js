@@ -2,21 +2,44 @@ import React, { Component } from "react";
 
 export const Footer = () => {
   return (
-    <nav class="navbar bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
-        <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-    </nav>
+    <div className="container fixed-bottom">
+      <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div className="col-md-4 d-flex align-items-center">
+          <a
+            href="/"
+            className="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"
+          >
+            <svg className="bi" width="30" height="24">
+              <use href="#bootstrap"></use>
+            </svg>
+          </a>
+          <span className="mb-3 mb-md-0 text-muted">© 2022 Company, Inc</span>
+        </div>
+
+        <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li className="ms-3">
+            <a className="text-muted" href="#">
+              <svg className="bi" width="24" height="24">
+                <use href="#twitter"></use>
+              </svg>
+            </a>
+          </li>
+          <li className="ms-3">
+            <a className="text-muted" href="#">
+              <svg className="bi" width="24" height="24">
+                <use href="#instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li className="ms-3">
+            <a className="text-muted" href="#">
+              <svg className="bi" width="24" height="24">
+                <use href="#facebook"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </footer>
+    </div>
   );
 };

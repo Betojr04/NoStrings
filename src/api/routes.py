@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 import hashlib
+from datetime import datetime
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -32,14 +33,12 @@ def create_account():
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
     has_email = User.query.filter_by(email = email).first()
     if has_email is None:
-        new_user = User(email = email, password = password, is_active = True)
+        new_user = User(email = email, password = password, is_active = True, created_at = datetime.now())
         db.session.add(new_user)
         db.session.commit()
         return jsonify('Successfully Created Account')
     else:
         return jsonify('User already Exists')
-
-
 
 @api.route('/Login', methods=['POST'])
 def Login():
@@ -52,3 +51,35 @@ def Login():
         return jsonify(access_token = access_token)
     else: 
         return jsonify("Email or Password is Invalid")
+
+@api.route('/user/data', methods=['PUT'])
+@jwt_required()
+def validate_identity():
+    current_user = get_jwt_identity()
+    body = request.get_json(force = True)
+    user = User.query.filter_by(email = email).first()
+    if body['gender'] is not None:
+        user.gender = body['gender']
+        db.session.commit()
+    if body['age'] is not None:
+        user.age = body['age']  
+        db.session.commit()
+    if body['profilepic'] is not None:
+        user.profile_pic = body['profilepic']
+        db.session.commit()
+    if body['location'] is not None:
+        user.location = body['location']
+        db.session.commit()
+    if body['intersts'] is not None:
+        user.interests = body['intersts']
+        db.session.commit()
+    if body['sexual_interests'] is not None:
+        user.sexual_interests = body['sexual_interests']
+        db.session.commit()
+    if body['isonline'] is not None:
+        user.is_online = body['isonline']
+        db.session.commit()
+    if body['currentplan'] is not None:
+        user.current_plan = body['currentplan']
+        db.session.commit()
+    return jsonify(logged_in_as = current_user)         

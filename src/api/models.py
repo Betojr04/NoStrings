@@ -19,8 +19,10 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=True)
     profile_pic = db.Column(db.String(120), unique=False, nullable=True)
-    location = db.Column(db.Integer, primary_key=True)
+    # I made the location column a foreign key to the location table instead of a primary key since there can only be one primary key- Beto
+    location = db.Column(db.String(120), unique=True, nullable=True)
     gender = db.Column(db.String(120), unique=True, nullable=True)
     interests = db.Column(db.String(120), unique=True, nullable=True)
     sexual_interests = db.Column(db.String(120), unique=True, nullable=True)

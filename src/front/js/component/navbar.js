@@ -6,7 +6,7 @@ export const Navbar = () => {
   const [leftBurger, setLeftBurger] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   return (
-    <nav className="navbar bg-light fixed-top">
+    <nav className="navbar bg-light">
       <div className="container-fluid">
         <img
           className="preferenceIcon"
