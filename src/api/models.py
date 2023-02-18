@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy.sql import func
 db = SQLAlchemy()
 
 
@@ -27,10 +27,10 @@ class User(db.Model):
     interests = db.Column(db.String(120), unique=True, nullable=True)
     sexual_interests = db.Column(db.String(120), unique=True, nullable=True)
     is_online = db.Column(db.Boolean(), unique=False, nullable=True)
-    created_at = db.Column(db.DateTime, unique=False, nullable=True)
     current_plan = db.Column(db.String(120), unique=False, nullable=True)
     groups = db.relationship('Groups', backref="user", lazy='dynamic')
-
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    
     
     def __repr__(self):
         return f'<User {self.email}>'

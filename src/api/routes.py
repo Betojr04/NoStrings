@@ -52,6 +52,8 @@ def Login():
     else: 
         return jsonify("Email or Password is Invalid")
 
+
+
 @api.route('/user/data', methods=['PUT'])
 @jwt_required()
 def validate_identity():
