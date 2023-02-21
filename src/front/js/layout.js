@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
@@ -22,12 +22,21 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <Navbar />
+          {/* <Navbar />  */}
 
           <Routes>
-            <Route element={<Home />} path="/" />
+            <Route
+              element={
+                <Navigate
+                  replace
+                  to={localStorage.getItem("token") ? "/home" : "/login"}
+                />
+              }
+              path="/"
+            />
+            <Route element={<Home />} path="/home" />
             <Route element={<Login />} path="/login" />
-            <Route element={<Signup />} path="/Signup" />
+            <Route element={<Signup />} path="/signup" />
             <Route element={<ChooseRole />} path="/chooserole" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
