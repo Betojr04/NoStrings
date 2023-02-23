@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import preferenceIcon from "../../img/options.png";
 export const Navbar = () => {
   const [showOffCanvas, setShowOffCanvas] = useState(false);
   const [leftBurger, setLeftBurger] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  let Navigate = useNavigate();
+
   return (
     <nav className="navbar bg-light">
       <div className="container-fluid">
@@ -146,17 +148,14 @@ export const Navbar = () => {
                   </ul>
                 </li>
               </ul>
-              <form className="d-flex mt-3" role="search">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  Navigate("/login");
+                }}
+              >
+                Logout
+              </button>
             </div>
           </div>
         ) : null}
@@ -175,7 +174,8 @@ export const Navbar = () => {
                     aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseOne"
                   >
-                    Accordion Item #1
+                    {/* make 'guys' a button and boolean so when you onyl click guys (not the dropdown) it filters out guys or no guys */}
+                    Guys
                   </button>
                 </h2>
                 <div
@@ -184,15 +184,43 @@ export const Navbar = () => {
                   aria-labelledby="panelsStayOpen-headingOne"
                 >
                   <div className="accordion-body">
-                    <strong>This is the first item's accordion body.</strong> It
-                    is shown by default, until the collapse plugin adds the
-                    appropriate classes that we use to style each element. These
-                    classes control the overall appearance, as well as the
-                    showing and hiding via CSS transitions. You can modify any
-                    of this with custom CSS or overriding our default variables.
-                    It's also worth noting that just about any HTML can go
-                    within the <code>.accordion-body</code>, though the
-                    transition does limit overflow.
+                    {/* make it only a button */}
+                    <strong>Is online</strong>
+                  </div>
+                  <div className="accordion-body">
+                    {/* make it only a button */}
+                    <strong>Has Profile Photo</strong>
+                  </div>
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Hosting Type
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Another action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Something else here
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -206,7 +234,8 @@ export const Navbar = () => {
                     aria-expanded="false"
                     aria-controls="panelsStayOpen-collapseTwo"
                   >
-                    Accordion Item #2
+                    {/* make 'girls' a button and boolean so when you onyl click guys (not the dropdown) it filters out girls or no girls */}
+                    Girls
                   </button>
                 </h2>
                 <div
@@ -215,18 +244,49 @@ export const Navbar = () => {
                   aria-labelledby="panelsStayOpen-headingTwo"
                 >
                   <div className="accordion-body">
-                    <strong>This is the second item's accordion body.</strong>{" "}
-                    It is hidden by default, until the collapse plugin adds the
-                    appropriate classes that we use to style each element. These
-                    classes control the overall appearance, as well as the
-                    showing and hiding via CSS transitions. You can modify any
-                    of this with custom CSS or overriding our default variables.
-                    It's also worth noting that just about any HTML can go
-                    within the <code>.accordion-body</code>, though the
-                    transition does limit overflow.
+                    <div className="accordion-body">
+                      {/* make it only a button */}
+                      <strong>Is online</strong>
+                    </div>
+                    <div className="accordion-body">
+                      {/* make it only a button */}
+                      <strong>Has Profile Picture</strong>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Hosting Type
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Another action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Something else here
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
+
               <div className="accordion-item">
                 <h2
                   className="accordion-header"
@@ -240,26 +300,14 @@ export const Navbar = () => {
                     aria-expanded="false"
                     aria-controls="panelsStayOpen-collapseThree"
                   >
-                    Accordion Item #3
+                    Gatherings
                   </button>
                 </h2>
                 <div
                   id="panelsStayOpen-collapseThree"
                   className="accordion-collapse collapse"
                   aria-labelledby="panelsStayOpen-headingThree"
-                >
-                  <div className="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It
-                    is hidden by default, until the collapse plugin adds the
-                    appropriate classes that we use to style each element. These
-                    classes control the overall appearance, as well as the
-                    showing and hiding via CSS transitions. You can modify any
-                    of this with custom CSS or overriding our default variables.
-                    It's also worth noting that just about any HTML can go
-                    within the <code>.accordion-body</code>, though the
-                    transition does limit overflow.
-                  </div>
-                </div>
+                ></div>
               </div>
             </div>
           </div>
