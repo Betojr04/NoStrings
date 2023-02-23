@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import preferenceIcon from "../../img/options.png";
 export const Navbar = () => {
@@ -8,7 +9,7 @@ export const Navbar = () => {
   let Navigate = useNavigate();
 
   return (
-    <nav className="navbar bg-light">
+    <nav className="navbar bg-light absolute-top">
       <div className="container-fluid">
         <img
           className="preferenceIcon"
