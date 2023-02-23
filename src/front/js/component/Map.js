@@ -12,11 +12,20 @@ export default function SimpleMap() {
     zoom: 11,
   };
 
+  const apiIsLoaded = (map, maps, places) => {
+    // Get bounds by our places
+    const bounds = getMapBounds(map, maps, places);
+    // Fit map to bounds
+    map.fitBounds(bounds);
+    // Bind the resize listener
+    bindResizeListener(map, maps, bounds);
+  };
+
   return (
     // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
+        bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
