@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import OnlyAuthenticated from "./onlyAuthenticated";
 import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import preferenceIcon from "../../img/options.png";
@@ -149,14 +150,16 @@ export const Navbar = () => {
                   </ul>
                 </li>
               </ul>
-              <button
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  Navigate("/login");
-                }}
-              >
-                Logout
-              </button>
+              <OnlyAuthenticated>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    Navigate("/login");
+                  }}
+                >
+                  Logout
+                </button>
+              </OnlyAuthenticated>
             </div>
           </div>
         ) : null}

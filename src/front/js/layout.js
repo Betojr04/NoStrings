@@ -25,15 +25,8 @@ const Layout = () => {
           {/* <Navbar />  */}
 
           <Routes>
-            <Route
-              element={
-                <Navigate
-                  replace
-                  to={localStorage.getItem("token") ? "/home" : "/login"}
-                />
-              }
-              path="/"
-            />
+            {/* removed because the anonymous functionality was not working properly */}
+            <Route element={<Home />} path="/" />
             <Route element={<Home />} path="/home" />
             <Route element={<Login />} path="/login" />
             <Route element={<Signup />} path="/signup" />

@@ -111,6 +111,9 @@ const Login = () => {
 
         <div className="d-flex justify-content-center align-items-center mt-3">
           <button
+            onClick={() => {
+              localStorage.removeItem("token");
+            }}
             type="button"
             className="btn btn-primary"
             data-bs-toggle="modal"
@@ -169,7 +172,12 @@ const Login = () => {
                     >
                       Close
                     </button>
-                    <button type="button" className="btn btn-primary">
+                    <button
+                      // wrapping in a function because we dont want it to run as soon as the component renders.
+                      onClick={() => Navigate("/home")}
+                      type="button"
+                      className="btn btn-primary"
+                    >
                       Save changes
                     </button>
                   </div>
