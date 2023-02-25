@@ -8,27 +8,27 @@ const Signup = () => {
   const Navigate = useNavigate();
   console.log(email, password);
   const createAccount = (e) => {
+    console.log("create account function being called");
     e.preventDefault();
     // !copy and paste the back end URL everytime you open up gitpod again!
-    fetch(
-      "https://3001-michbalkany-datingoutof-0yeze9xbh8x.ws-us87.gitpod.io/api/createaccount",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    fetch(process.env.BACKEND_URL + "/api/createaccount", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
       .then((Response) => {
+        console.log("response is okay");
         return Response.json();
       })
       .then((result) => {
         if (result.includes("User already exists :(")) {
+          console.log("username taken");
           setError("Username Taken");
         } else {
-          console.log(result);
+          console.log("user does not exist");
           Navigate("/Login");
         }
       })
@@ -36,6 +36,7 @@ const Signup = () => {
         console.log(error);
       });
   };
+  console.log("rendering sign up page");
   return (
     <form onSubmit={createAccount} className="container mt-5">
       <div className="mb-3">

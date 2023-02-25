@@ -38,21 +38,18 @@ def create_account():
         db.session.commit()
         return jsonify('Successfully Created Account')
     else:
-        return jsonify('User already Exists')
+        raise APIException('User already Exists')
 
-@api.route('/Login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def Login():
     body = request.get_json(force = True)
     email = body['email']
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
-    has_user = User.query.filter_by(email = email, password = password).first()
-    if has_user is not None:
-        access_token = create_access_token(identity = email)
-        return jsonify(access_token = access_token)
-    else: 
-        return jsonify("Email or Password is Invalid")
-
-
+    user = User.query.filter_by(email = email, password = password).first()
+    if user is None:
+        raise APIException('Invalid Credentials')
+    access_token = create_access_token(identity = email)
+    return jsonify(access_token = access_token)
 
 @api.route('/user/data', methods=['PUT'])
 @jwt_required()
