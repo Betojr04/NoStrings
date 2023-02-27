@@ -6,7 +6,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 import hashlib
 from datetime import datetime
-import random
+
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -50,17 +50,6 @@ def Login():
         raise APIException('Invalid Credentials')
     access_token = create_access_token(identity = email)
     return jsonify(access_token = access_token)
-   
-
-@api.route('/anon-login', methods=['GET'])
-def anon_login():
-    randnum = random.randint(0,9999999)
-   
-    access_token = create_access_token(identity = randnum)
-    return jsonify(access_token = access_token)
-    
-    
-
 
 @api.route('/user/data', methods=['PUT'])
 @jwt_required()
