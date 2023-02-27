@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/footer.css";
 import { Link, useNavigate } from "react-router-dom";
-export const Footer = () => {
+import ChatBox from "./chatBox";
+export const Footer = (props) => {
   const [showOffCanvas, setShowOffCanvas] = useState(false);
   let Navigate = useNavigate();
 
@@ -9,33 +10,47 @@ export const Footer = () => {
     <nav className="navbar bg-light absolute-bottom">
       <div className="container-fluid">
         <button
-          onClick={() => setShowOffCanvas(true)}
-          className="navbar-toggler bg-light"
+          class="btn navbar-toggler bg-light"
           type="button"
           data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar"
+          data-bs-target="#offcanvasBottom1"
+          aria-controls="offcanvasBottom"
         >
           <i class="fa-solid fa-users-between-lines"></i>
         </button>
-        <button
-          onClick={() => setShowOffCanvas(true)}
-          className="navbar-toggler bg-light"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar"
+
+        <div
+          class="offcanvas offcanvas-bottom"
+          tabindex="-1"
+          id="offcanvasBottom1"
+          aria-labelledby="offcanvasBottomLabel"
         >
-          <i class="fa-regular fa-comments"></i>
-        </button>
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+              Chat
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body small">
+            <ChatBox />
+          </div>
+        </div>
+
+        {/* seperation */}
+
         <button
-          class="btn btn-primary"
+          class="btn navbar-toggler bg-light"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
         >
-          Toggle bottom offcanvas
+          <i class="fa-regular fa-comments"></i>
         </button>
 
         <div
@@ -46,7 +61,7 @@ export const Footer = () => {
         >
           <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom
+              Chat
             </h5>
             <button
               type="button"
@@ -55,7 +70,9 @@ export const Footer = () => {
               aria-label="Close"
             ></button>
           </div>
-          <div class="offcanvas-body small">...</div>
+          <div class="offcanvas-body small">
+            <ChatBox />
+          </div>
         </div>
       </div>
     </nav>

@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
+  const { store, actions } = useContext(Context);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState("");
   const Navigate = useNavigate();
   const [ageVerified, setAgeVerified] = useState(false);
   // removed navigate link function entirely because it doesnt make sense- Alejandro
+
+  const anonLogin = () => {
+    console.log("its running");
+    let result = actions.handleAnonLogin();
+
+    if (result == true) {
+      Navigate("/home");
+    }
+    // get back to the else statement later
+  };
   const handlelogin = (e) => {
     e.preventDefault();
     fetch(process.env.BACKEND_URL + "/api/login", {
@@ -98,7 +110,13 @@ const Login = () => {
                         Check me out
                       </label>
                     </div>
-                    <button type="submit" className="btn btn-primary">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={() => {
+                        navigateLink();
+                      }}
+                    >
                       Login
                     </button>
                     <Link to="/signup">Create Account</Link>
@@ -111,17 +129,16 @@ const Login = () => {
 
         <div className="d-flex justify-content-center align-items-center mt-3">
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-            }}
             type="button"
             className="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal2"
+            onClick={() => {
+              anonLogin();
+            }}
           >
             Use Anonymously
           </button>
-
           <div
             className="modal fade"
             id="exampleModal2"

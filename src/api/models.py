@@ -65,7 +65,7 @@ class Groups(db.Model):
     created_at = db.Column(db.DateTime, unique=False, nullable=True)
     groups_activity_type = db.Column(db.String(120), unique=False, nullable=True)
     groups_guidelines = db.Column(db.String(250), unique=False, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    admin_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     def __repr__(self):
         return f'<groups {self.name}>'
 
@@ -130,3 +130,11 @@ class User_Review(db.Model):
             # do not serialize the password, its a security breach
         }
     
+class Global_Messages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message =db.Column(db.String(250), unique=False, nullable=False)
+    sender_id =db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_at = db.Column(db.DateTime, unique=False, nullable=True)
+
+    def __repr__(self):
+        return f'<Global_Messages {self.id}>'
