@@ -120,5 +120,5 @@ def send_Message():
 def get_Users():
       users = User.query.all()
       serialized_Users
-    #   serve all the users 
+    #   serve all the users, this will get the lcoation, and get them on the chats n shit
     #
