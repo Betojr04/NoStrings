@@ -12,21 +12,20 @@ function ChatBox() {
   // socket.on("message", function (data) {
   //   console.log("Received message: " + data);
   // });
+  let backendUrl = process.env.BACKEND_URL;
+
   function sendMessage(message) {
-    fetch(
-      "https://3001-michbalkany-datingoutof-11i75l2v5zx.ws-us88.gitpod.io/api/chat",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          message: message,
-          //(below) hard coded for now since we cant get users for now
-          receiver_id: 2,
-        }),
-      }
-    )
+    fetch(backendUrl + "/api/chat", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        message: message,
+        //(below) hard coded for now since we cant get users for now
+        receiver_id: 2,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

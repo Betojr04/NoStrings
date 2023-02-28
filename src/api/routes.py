@@ -102,7 +102,9 @@ def send_Message():
     request_body=request.get_json(force=True)
     email = get_jwt_identity()
     user = User.query.filter_by(email=email).first()
-    if user is not None:
+    print(email)
+    print(user)
+    if user:
         message = request_body.get("message")
         sender_id = user.id
         receiver_id = request_body.get("receiver_id")
@@ -114,3 +116,9 @@ def send_Message():
     return jsonify('user not found'), 400
 
 
+@api.route('/all-users', methods=['GET'])
+def get_Users():
+      users = User.query.all()
+      serialized_Users
+    #   serve all the users 
+    #
