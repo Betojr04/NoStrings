@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/chatBox.css";
+import io from "socket.io-client";
 
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [send, setSend] = useState(false);
+  let socket = io.connect(
+    "https://3001-michbalkany-datingoutof-11i75l2v5zx.ws-us88.gitpod.io"
+  );
+  socket.on("message", function (data) {
+    console.log("Received message: " + data);
+  });
+  function sendMessage(message) {
+    socket.emit("message", message);
+  }
+  useEffect(() => {
+    console.log("i am true with", inputValue);
 
+    sendMessage(inputValue);
+
+    setSend(false);
+  }, [inputValue]);
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -15,6 +32,7 @@ function ChatBox() {
     if (inputValue.trim() !== "") {
       setMessages([...messages, { text: inputValue, isEditable: false }]);
       setInputValue("");
+      setSend(true);
     }
   };
 
