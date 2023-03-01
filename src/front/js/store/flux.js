@@ -50,6 +50,36 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(error);
           });
       },
+      getCurrentLocation: () => {
+        if (navigator.geolocation && localStorage.getItem("token")) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              fetch(backEndURL + "/api/current-location", {
+                method: "PUT",
+                body: JSON.stringify({
+                  location: {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                  },
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer" + localStorage.getItem("token"),
+                },
+              })
+                .then((resp) => console.log(resp.json()))
+                .catch((error) => {
+                  console.log(error);
+                });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        } else {
+          console.log("Geolocation is not supported by this browser");
+        }
+      },
     },
   };
 };

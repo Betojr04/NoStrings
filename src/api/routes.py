@@ -122,3 +122,14 @@ def get_Users():
       serialized_Users
     #   serve all the users, this will get the lcoation, and get them on the chats n shit
     #
+
+@api.route('/current-location', methods=['PUT'])
+@jwt_required()
+def update_Location():
+    location = request.get_json("location", None)
+    user = User.query.filter_by(email=get_jwt_identity).first()
+    user["location"]= location
+    db.session.commit()
+    return True ,200
+
+

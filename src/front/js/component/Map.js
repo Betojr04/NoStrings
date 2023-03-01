@@ -1,70 +1,178 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+// import GoogleMapReact from "google-map-react";
+
+// const AnyReactComponent = ({ text }) => (
+//   <div>
+//     <i class="fa-solid fa-location-dot fa-2xl"></i>
+//   </div>
+// );
+
+// export default function SimpleMap() {
+//   const [userPosition, setUserPosition] = useState(null);
+
+//   const defaultProps = {
+//     center: {
+//       lat: 25.761681,
+//       lng: -80.191788,
+//     },
+//     zoom: 11,
+//   };
+
+//   const apiIsLoaded = (map, maps, places) => {
+//     // Get bounds by our places
+//     const bounds = getMapBounds(map, maps, places);
+//     // Fit map to bounds
+//     map.fitBounds(bounds);
+//     // Bind the resize listener
+//     bindResizeListener(map, maps, bounds);
+//   };
+
+//   useEffect(() => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           setUserPosition({
+//             lat: position.coords.latitude,
+//             lng: position.coords.longitude,
+//           });
+//         },
+//         (error) => {
+//           console.log(error);
+//         }
+//       );
+//     } else {
+//       console.log("Geolocation is not supported by this browser");
+//     }
+//   });
+
+//   return (
+//     // Important! Always set the container height explicitly
+//     <div style={{ height: "88vh", width: "100%" }}>
+//       <GoogleMapReact
+//         bootstrapURLKeys={{
+//           key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo",
+//         }}
+//         defaultCenter={defaultProps.center}
+//         defaultZoom={defaultProps.zoom}
+//       >
+//         <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
+
+//         {userPosition && (
+//           <AnyReactComponent
+//             lat={userPosition.lat}
+//             lng={userPosition.lng}
+//             text="Your Location"
+//           />
+//         )}
+//       </GoogleMapReact>
+//     </div>
+//   );
+// }
+
+import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
 
-const AnyReactComponent = ({ text }) => (
-  <div>
-    <i class="fa-solid fa-location-dot fa-2xl"></i>
+// Define the Marker component
+const Marker = (props) => (
+  <div style={{ color: props.color }}>
+    <i class="fa-solid fa-location-dot fa-2xl"> {props.name}</i>
   </div>
 );
 
-export default function SimpleMap() {
-  const [userPosition, setUserPosition] = useState(null);
+let initialPosition = {
+  center: { lat: 37.7749, lng: -122.4194 },
+  zoom: 12,
+};
 
-  const defaultProps = {
-    center: {
-      lat: 25.761681,
-      lng: -80.191788,
+export const Map = () => {
+  const [guys, setGuys] = useState([
+    {
+      id: 1,
+      lat: 37.7653,
+      lng: -122.4188,
+      name: "jordan",
+      age: 21,
+      zipcode: "00923",
     },
-    zoom: 11,
-  };
-
-  const apiIsLoaded = (map, maps, places) => {
-    // Get bounds by our places
-    const bounds = getMapBounds(map, maps, places);
-    // Fit map to bounds
-    map.fitBounds(bounds);
-    // Bind the resize listener
-    bindResizeListener(map, maps, bounds);
-  };
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserPosition({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser");
-    }
-  });
+    {
+      id: 2,
+      lat: 37.7549,
+      lng: -122.4194,
+      name: "Michael",
+      age: 23,
+      zipcode: "32822",
+    },
+    {
+      id: 3,
+      lat: 37.7446,
+      lng: -122.42,
+      name: "Christian",
+      age: 31,
+      zipcode: "34744",
+    },
+    { id: 4, lat: 37, lng: -122.4194, name: "Josh", age: 27, zipcode: "32822" },
+  ]);
+  const [girls, setGirls] = useState([
+    {
+      id: 1,
+      lat: 38.7765,
+      lng: -122.4188,
+      name: "Laura",
+      age: 24,
+      zipcode: "00923",
+    },
+    {
+      id: 2,
+      lat: 38.7735,
+      lng: -122.4194,
+      name: "Lisa",
+      age: 23,
+      zipcode: "32822",
+    },
+    {
+      id: 3,
+      lat: 38.7779,
+      lng: -122.42,
+      name: "Sarah",
+      age: 34,
+      zipcode: "34744",
+    },
+  ]);
 
   return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: "88vh", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{
-          key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo",
-        }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
+        bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
+        defaultCenter={initialPosition.center}
+        defaultZoom={initialPosition.zoom}
       >
-        <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-
-        {userPosition && (
-          <AnyReactComponent
-            lat={userPosition.lat}
-            lng={userPosition.lng}
-            text="Your Location"
-          />
-        )}
+        {guys
+          .filter((item) => item.age > 30)
+          .map((marker) => {
+            return (
+              <Marker
+                color="blue"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
+        {girls
+          .filter((item) => item.age < 25)
+          .map((marker) => {
+            return (
+              <Marker
+                color="red"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
       </GoogleMapReact>
     </div>
   );
-}
+};
