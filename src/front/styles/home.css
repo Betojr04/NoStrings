@@ -9,3 +9,7 @@
 body {
   padding-top: 56px;
 }
+
+.height-controller {
+  height: 100vh;
+}

@@ -1,3 +1,110 @@
+import React, { useState } from "react";
+import GoogleMapReact from "google-map-react";
+
+// Define the Marker component
+const Marker = (props) => (
+  <div style={{ color: props.color }}>
+    <i class="fa-solid fa-location-dot fa-2xl"> {props.name}</i>
+  </div>
+);
+
+let initialPosition = {
+  center: { lat: 25.871309, lng: -80.125676 },
+  zoom: 9,
+};
+
+export const Map = () => {
+  const [guys, setGuys] = useState([
+    {
+      id: 1,
+      lat: 25.749809,
+      lng: -80.205849,
+      name: "jordan",
+      age: 21,
+      zipcode: "33154",
+    },
+    {
+      id: 2,
+      lat: 25.891762,
+      lng: -80.126991,
+      name: "Michael",
+      age: 23,
+      zipcode: "33154",
+    },
+    {
+      id: 3,
+      lat: 25.88717832282329,
+      lng: -80.16158170249071,
+      name: "Christian",
+      age: 31,
+      zipcode: "33154",
+    },
+  ]);
+  const [girls, setGirls] = useState([
+    {
+      id: 1,
+      lat: 25.87574236814734,
+      lng: -80.20135529044997,
+      name: "Laura",
+      age: 24,
+      zipcode: "00923",
+    },
+    {
+      id: 2,
+      lat: 25.900598439487815,
+      lng: 80.24567187168712,
+      name: "Lisa",
+      age: 23,
+      zipcode: "32822",
+    },
+    {
+      id: 3,
+      lat: 25.815724339869988,
+      lng: -80.12945770666995,
+      name: "Sarah",
+      age: 34,
+      zipcode: "34744",
+    },
+  ]);
+
+  return (
+    <div style={{ height: "80vh", width: "100%" }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
+        defaultCenter={initialPosition.center}
+        defaultZoom={initialPosition.zoom}
+      >
+        {guys
+          .filter((item) => item.age > 30)
+          .map((marker) => {
+            return (
+              <Marker
+                color="blue"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
+        {girls
+          .filter((item) => item.age < 25)
+          .map((marker) => {
+            return (
+              <Marker
+                color="red"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
+      </GoogleMapReact>
+    </div>
+  );
+};
+
 // import React, { useState, useEffect } from "react";
 // import GoogleMapReact from "google-map-react";
 
@@ -68,111 +175,3 @@
 //     </div>
 //   );
 // }
-
-import React, { useState } from "react";
-import GoogleMapReact from "google-map-react";
-
-// Define the Marker component
-const Marker = (props) => (
-  <div style={{ color: props.color }}>
-    <i class="fa-solid fa-location-dot fa-2xl"> {props.name}</i>
-  </div>
-);
-
-let initialPosition = {
-  center: { lat: 37.7749, lng: -122.4194 },
-  zoom: 12,
-};
-
-export const Map = () => {
-  const [guys, setGuys] = useState([
-    {
-      id: 1,
-      lat: 37.7653,
-      lng: -122.4188,
-      name: "jordan",
-      age: 21,
-      zipcode: "00923",
-    },
-    {
-      id: 2,
-      lat: 37.7549,
-      lng: -122.4194,
-      name: "Michael",
-      age: 23,
-      zipcode: "32822",
-    },
-    {
-      id: 3,
-      lat: 37.7446,
-      lng: -122.42,
-      name: "Christian",
-      age: 31,
-      zipcode: "34744",
-    },
-    { id: 4, lat: 37, lng: -122.4194, name: "Josh", age: 27, zipcode: "32822" },
-  ]);
-  const [girls, setGirls] = useState([
-    {
-      id: 1,
-      lat: 38.7765,
-      lng: -122.4188,
-      name: "Laura",
-      age: 24,
-      zipcode: "00923",
-    },
-    {
-      id: 2,
-      lat: 38.7735,
-      lng: -122.4194,
-      name: "Lisa",
-      age: 23,
-      zipcode: "32822",
-    },
-    {
-      id: 3,
-      lat: 38.7779,
-      lng: -122.42,
-      name: "Sarah",
-      age: 34,
-      zipcode: "34744",
-    },
-  ]);
-
-  return (
-    <div style={{ height: "100vh", width: "100%" }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
-        defaultCenter={initialPosition.center}
-        defaultZoom={initialPosition.zoom}
-      >
-        {guys
-          .filter((item) => item.age > 30)
-          .map((marker) => {
-            return (
-              <Marker
-                color="blue"
-                key={marker.id}
-                lat={marker.lat}
-                lng={marker.lng}
-                name={marker.name}
-              />
-            );
-          })}
-        {girls
-          .filter((item) => item.age < 25)
-          .map((marker) => {
-            return (
-              <Marker
-                color="red"
-                key={marker.id}
-                lat={marker.lat}
-                lng={marker.lng}
-                name={marker.name}
-              />
-            );
-          })}
-      </GoogleMapReact>
-    </div>
-  );
-};
