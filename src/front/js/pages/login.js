@@ -114,7 +114,8 @@ const Login = () => {
                       type="submit"
                       className="btn btn-primary"
                       onClick={() => {
-                        navigateLink();
+                        // fix this so after user logs in and gets token, user is then redirected to home
+                        Navigate("/home");
                       }}
                     >
                       Login

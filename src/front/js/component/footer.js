@@ -7,7 +7,7 @@ export const Footer = (props) => {
   let Navigate = useNavigate();
 
   return (
-    <nav className="navbar bg-light absolute-bottom">
+    <nav className="navbar bg-light  fixed-bottom">
       <div className="container-fluid">
         <button
           class="btn navbar-toggler bg-light"
