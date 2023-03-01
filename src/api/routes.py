@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Messages
 from api.utils import generate_sitemap, APIException
 import hashlib
 from datetime import datetime
@@ -10,6 +10,7 @@ import random
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+
 # from app import socketio
 
 api = Blueprint('api', __name__)
@@ -94,3 +95,41 @@ def validate_identity():
         user.current_plan = body['currentplan']
         db.session.commit()
     return jsonify("You have successfully updated your profile")         
+
+@api.route('/chat', methods=['POST'])
+@jwt_required()
+def send_Message():
+    request_body=request.get_json(force=True)
+    email = get_jwt_identity()
+    user = User.query.filter_by(email=email).first()
+    print(email)
+    print(user)
+    if user:
+        message = request_body.get("message")
+        sender_id = user.id
+        receiver_id = request_body.get("receiver_id")
+        created_at = datetime.now()
+        new_message = Messages(message=message, sender_id= sender_id, receiver_id = receiver_id, created_at = created_at)
+        db.session.add(new_message)
+        db.session.commit()
+        return jsonify('message sent'),200
+    return jsonify('user not found'), 400
+
+
+@api.route('/all-users', methods=['GET'])
+def get_Users():
+      users = User.query.all()
+      serialized_Users
+    #   serve all the users, this will get the lcoation, and get them on the chats n shit
+    #
+
+@api.route('/current-location', methods=['PUT'])
+@jwt_required()
+def update_Location():
+    location = request.get_json("location", None)
+    user = User.query.filter_by(email=get_jwt_identity).first()
+    user["location"]= location
+    db.session.commit()
+    return True ,200
+
+

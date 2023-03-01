@@ -1,27 +1,49 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/chatBox.css";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [send, setSend] = useState(false);
-  let socket = io.connect(
-    "https://3001-michbalkany-datingoutof-11i75l2v5zx.ws-us88.gitpod.io"
-  );
-  socket.on("message", function (data) {
-    console.log("Received message: " + data);
-  });
+  // let socket = io.connect(
+  //   "https://3001-michbalkany-datingoutof-11i75l2v5zx.ws-us88.gitpod.io"
+  // );
+  // socket.on("message", function (data) {
+  //   console.log("Received message: " + data);
+  // });
+  let backendUrl = process.env.BACKEND_URL;
+
   function sendMessage(message) {
-    socket.emit("message", message);
+    fetch(backendUrl + "/api/chat", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        message: message,
+        //(below) hard coded for now since we cant get users for now
+        receiver_id: 2,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // handle the response data here
+      })
+      .catch((error) => {
+        console.log(error);
+        // handle any errors here
+      });
   }
   useEffect(() => {
-    console.log("i am true with", inputValue);
-
-    sendMessage(inputValue);
+    if (send) {
+      sendMessage(inputValue);
+      setInputValue("");
+    }
 
     setSend(false);
-  }, [inputValue]);
+  }, [send]);
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -31,7 +53,6 @@ function ChatBox() {
 
     if (inputValue.trim() !== "") {
       setMessages([...messages, { text: inputValue, isEditable: false }]);
-      setInputValue("");
       setSend(true);
     }
   };
