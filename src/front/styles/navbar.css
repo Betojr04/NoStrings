@@ -6,7 +6,9 @@
   width: 100vw;
 }
 
-.online-filter.active {
+.online-filter.active,
+.is-registered.active,
+.is-anonymous.active {
   background: var(--lightblue);
   padding: 5px;
   font-weight: 700;
