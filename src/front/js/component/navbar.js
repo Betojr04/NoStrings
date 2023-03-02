@@ -10,7 +10,7 @@ export const Navbar = () => {
   let Navigate = useNavigate();
 
   return (
-    <nav className="navbar bg-light absolute-top">
+    <nav className="navbar bg-light  fixed-top">
       <div className="container-fluid">
         <img
           className="preferenceIcon"

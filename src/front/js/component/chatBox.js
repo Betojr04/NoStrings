@@ -83,7 +83,7 @@ function ChatBox() {
   };
 
   return (
-    <div className="chat-box">
+    <div className="chat-box mx-auto">
       <ul className="chat-box__messages">
         {messages.map((message, index) => (
           <li key={index} className="chat-box__message">

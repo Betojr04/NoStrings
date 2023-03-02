@@ -3,6 +3,24 @@ import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // check user's credentials and set isLoggedIn state to true if credentials are valid
+    if (isValidCredentials) {
+      setIsLoggedIn(true);
+    }
+  };
+
+  const handleClick = () => {
+    if (isLoggedIn) {
+      Navigate("/home");
+    } else {
+      // show a message indicating that the user needs to log in first
+      alert("Please log in first.");
+    }
+  };
+
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -113,10 +131,7 @@ const Login = () => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      onClick={() => {
-                        // fix this so after user logs in and gets token, user is then redirected to home
-                        Navigate("/home");
-                      }}
+                      onClick={handleClick}
                     >
                       Login
                     </button>

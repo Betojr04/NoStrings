@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
 
+import "../../styles/map.css";
+
 // Define the Marker component
 const Marker = (props) => (
   <div style={{ color: props.color }}>
@@ -68,14 +70,14 @@ export const Map = () => {
   ]);
 
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "95.5vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
         {guys
-          .filter((item) => item.age > 30)
+          // .filter((item) => item.age < 30)
           .map((marker) => {
             return (
               <Marker
@@ -88,7 +90,7 @@ export const Map = () => {
             );
           })}
         {girls
-          .filter((item) => item.age < 25)
+          // .filter((item) => item.age < 25)
           .map((marker) => {
             return (
               <Marker
