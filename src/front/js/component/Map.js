@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import GoogleMapReact from "google-map-react";
+import { Context } from "../store/appContext";
 
 import "../../styles/map.css";
 
@@ -12,10 +13,12 @@ const Marker = (props) => (
 
 let initialPosition = {
   center: { lat: 25.871309, lng: -80.125676 },
-  zoom: 9,
+  zoom: 12,
 };
 
 export const Map = () => {
+  const { store, actions } = useContext(Context);
+
   const [guys, setGuys] = useState([
     {
       id: 1,
@@ -24,6 +27,7 @@ export const Map = () => {
       name: "jordan",
       age: 21,
       zipcode: "33154",
+      isOnline: false,
     },
     {
       id: 2,
@@ -32,6 +36,7 @@ export const Map = () => {
       name: "Michael",
       age: 23,
       zipcode: "33154",
+      isOnline: true,
     },
     {
       id: 3,
@@ -70,14 +75,14 @@ export const Map = () => {
   ]);
 
   return (
-    <div style={{ height: "95.5vh", width: "100%" }}>
+    <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
         {guys
-          // .filter((item) => item.age < 30)
+          .filter((item) => item.isOnline == store.filters.isOnline)
           .map((marker) => {
             return (
               <Marker

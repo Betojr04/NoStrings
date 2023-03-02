@@ -1,10 +1,13 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
-
 body {
   overflow: hidden;
 }
+:root {
+  --lightblue: #e3f2f4;
+}
+
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
 
 .modal-backdrop {
   position: sticky !important;

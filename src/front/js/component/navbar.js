@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import OnlyAuthenticated from "./onlyAuthenticated";
 import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import preferenceIcon from "../../img/options.png";
+import { Context } from "../store/appContext";
 export const Navbar = () => {
   const [showOffCanvas, setShowOffCanvas] = useState(false);
   const [leftBurger, setLeftBurger] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   let Navigate = useNavigate();
+  const { store, actions } = useContext(Context);
 
   return (
     <nav className="navbar bg-light  fixed-top">
@@ -189,7 +191,19 @@ export const Navbar = () => {
                 >
                   <div className="accordion-body">
                     {/* make it only a button */}
-                    <strong>Is online</strong>
+                    <div
+                      className={
+                        "online-filter " +
+                        (store.filters.isOnline ? "active" : "")
+                      }
+                      onClick={() => {
+                        actions.setFilter({
+                          isOnline: !store.filters.isOnline,
+                        });
+                      }}
+                    >
+                      Is online
+                    </div>
                   </div>
                   <div className="accordion-body">
                     {/* make it only a button */}

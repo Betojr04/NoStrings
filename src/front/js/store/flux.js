@@ -1,8 +1,23 @@
 const getState = ({ getStore, getActions, setStore }) => {
   let backEndURL = process.env.BACKEND_URL;
   return {
-    store: {},
+    store: {
+      filters: {
+        gender: null,
+        isOnline: true,
+        interests: orgy,
+        bukake,
+        exhibition,
+        gloryHoles,
+        BDSM,
+      },
+    },
     actions: {
+      setFilter: (newFilterValues) => {
+        console.log("setting new filters", newFilterValues);
+        const store = getStore();
+        setStore({ filters: { ...store.filters, ...newFilterValues } });
+      },
       handlelogin: (e) => {
         e.preventDefault();
         fetch(
