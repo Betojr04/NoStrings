@@ -28,6 +28,8 @@ export const Map = () => {
       age: 21,
       zipcode: "33154",
       isOnline: false,
+      isRegistered: false,
+      isAnonymous: true,
     },
     {
       id: 2,
@@ -37,6 +39,8 @@ export const Map = () => {
       age: 23,
       zipcode: "33154",
       isOnline: true,
+      isRegistered: true,
+      isAnonymous: false,
     },
     {
       id: 3,
@@ -45,6 +49,9 @@ export const Map = () => {
       name: "Christian",
       age: 31,
       zipcode: "33154",
+      isOnline: true,
+      isRegistered: true,
+      isAnonymous: false,
     },
   ]);
   const [girls, setGirls] = useState([
@@ -55,6 +62,9 @@ export const Map = () => {
       name: "Laura",
       age: 24,
       zipcode: "00923",
+      isOnline: true,
+      isRegistered: true,
+      isAnonymous: false,
     },
     {
       id: 2,
@@ -63,6 +73,9 @@ export const Map = () => {
       name: "Lisa",
       age: 23,
       zipcode: "32822",
+      isOnline: true,
+      isRegistered: true,
+      isAnonymous: false,
     },
     {
       id: 3,
@@ -71,6 +84,9 @@ export const Map = () => {
       name: "Sarah",
       age: 34,
       zipcode: "34744",
+      isOnline: true,
+      isRegistered: true,
+      isAnonymous: false,
     },
   ]);
 
@@ -83,6 +99,21 @@ export const Map = () => {
       >
         {guys
           .filter((item) => item.isOnline == store.filters.isOnline)
+          .filter((item) => item.isRegistered == store.filters.isRegistered)
+          .map((marker) => {
+            return (
+              <Marker
+                color="blue"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
+        {guys
+          .filter((item) => item.isOnline == store.filters.isOnline)
+          .filter((item) => item.isAnonymous == store.filters.isAnonymous)
           .map((marker) => {
             return (
               <Marker
@@ -95,7 +126,22 @@ export const Map = () => {
             );
           })}
         {girls
-          // .filter((item) => item.age < 25)
+          .filter((item) => item.isOnline == store.filters.isOnline)
+          .filter((item) => item.isRegistered == store.filters.isRegistered)
+          .map((marker) => {
+            return (
+              <Marker
+                color="red"
+                key={marker.id}
+                lat={marker.lat}
+                lng={marker.lng}
+                name={marker.name}
+              />
+            );
+          })}
+        {girls
+          .filter((item) => item.isOnline == store.filters.isOnline)
+          .filter((item) => item.isAnonymous == store.filters.isAnonymous)
           .map((marker) => {
             return (
               <Marker

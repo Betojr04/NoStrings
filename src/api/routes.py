@@ -118,8 +118,24 @@ def send_Message():
 
 @api.route('/all-users', methods=['GET'])
 def get_Users():
-      users = User.query.all()
-      serialized_Users
+    users = User.query.all()
+    serialized_users =[]
+    for user in users:
+        serialized_user = user.serialize()
+        serialized_users.append(serialized_user) 
+    male_users = []
+    for user in serialized_users:
+        if user["gender"] == "male":
+            male_users.append(user)
+    female_users = []
+    for user in serialized_users:
+        if user["gender"] == "female":
+            female_users.append(user)
+    payload= {
+            "male_users": male_users,
+            "female_users":female_users,
+        }
+    return jsonify(payload), 200
     #   serve all the users, this will get the lcoation, and get them on the chats n shit
     #
 
