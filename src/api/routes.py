@@ -142,10 +142,12 @@ def get_Users():
 @api.route('/current-location', methods=['PUT'])
 @jwt_required()
 def update_Location():
-    location = request.get_json("location", None)
-    user = User.query.filter_by(email=get_jwt_identity).first()
-    user["location"]= location
+    email = get_jwt_identity()
+    incomming_payload = request.get_json()
+    user = User.query.filter_by(email=email).first()
+    user.latitude= incomming_payload["lat"]
+    user.longitude= incomming_payload["lng"]
     db.session.commit()
-    return True ,200
+    return jsonify({"msg": "okay"}) ,200
 
 

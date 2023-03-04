@@ -22,10 +22,11 @@ class User(db.Model):
     age = db.Column(db.Integer, unique=False, nullable=True)
     profile_pic = db.Column(db.String(120), unique=False, nullable=True)
     # I made the location column a foreign key to the location table instead of a primary key since there can only be one primary key- Beto
-    location = db.Column(db.String(120), unique=True, nullable=True)
-    gender = db.Column(db.String(120), unique=True, nullable=True)
-    interests = db.Column(db.String(120), unique=True, nullable=True)
-    sexual_interests = db.Column(db.String(120), unique=True, nullable=True)
+    latitude = db.Column(db.Float, unique=False, nullable=True)
+    longitude = db.Column(db.Float, unique=False, nullable=True)
+    gender = db.Column(db.String(120), unique=False, nullable=True)
+    interests = db.Column(db.String(120), unique=False, nullable=True)
+    sexual_interests = db.Column(db.String(120), unique=False, nullable=True)
     is_online = db.Column(db.Boolean(), unique=False, nullable=True)
     current_plan = db.Column(db.String(120), unique=False, nullable=True)
     groups = db.relationship('Groups', backref="user", lazy='dynamic')
@@ -41,7 +42,8 @@ class User(db.Model):
             "email": self.email,
             "is_active": self.is_active,
             "profile_pic": self.profile_pic,
-            "location":self.location,
+            "latitude":self.latitude,
+            "longitude":self.longitude,
             "gender":self.gender,
             "interests":self.interests,
             "sexual_interests":self.sexual_interests,
@@ -58,9 +60,10 @@ class Groups(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
     profile_pic = db.Column(db.String(120), unique=False, nullable=True)
     # group location data type needs to be revised
-    groups_location = db.Column(db.Integer, primary_key=True)
-    gender = db.Column(db.String(120), unique=True, nullable=True)
-    interests = db.Column(db.String(120), unique=True, nullable=True)
+    groups_longitude = db.Column(db.Float, unique=False, nullable=True)
+    groups_latitude = db.Column(db.Float, unique=False, nullable=True)
+    gender = db.Column(db.String(120), unique=False, nullable=True)
+    interests = db.Column(db.String(120), unique=False, nullable=True)
     is_online = db.Column(db.Boolean(), unique=False, nullable=True)
     created_at = db.Column(db.DateTime, unique=False, nullable=True)
     groups_activity_type = db.Column(db.String(120), unique=False, nullable=True)
@@ -74,7 +77,8 @@ class Groups(db.Model):
             "id": self.id,
             "is_active": self.is_active,
             "profile_pic": self.profile_pic,
-            "groups_location":self.groups_location,
+            "groups_longitude":self.groups_longitude,
+            "groups_latitude":self.groups_latitude,
             "gender":self.gender,
             "interests":self.interests,
             "is_online":self.is_online,

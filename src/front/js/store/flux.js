@@ -72,14 +72,12 @@ const getState = ({ getStore, getActions, setStore }) => {
               fetch(backEndURL + "/api/current-location", {
                 method: "PUT",
                 body: JSON.stringify({
-                  location: {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                  },
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
                 }),
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: "Bearer" + localStorage.getItem("token"),
+                  Authorization: "Bearer " + localStorage.getItem("token"),
                 },
               })
                 .then((resp) => console.log(resp.json()))
