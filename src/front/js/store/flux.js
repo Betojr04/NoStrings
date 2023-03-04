@@ -1,9 +1,11 @@
+import { Data } from "@react-google-maps/api";
+
 const getState = ({ getStore, getActions, setStore }) => {
   let backEndURL = process.env.BACKEND_URL;
   return {
     store: {
-      maleUsers: [],
-      femaleUsers: [],
+      // changed to users since we are no longer having sepasrate code for guys and girls
+      users: [],
       filters: {
         gender: null,
         isOnline: true,
@@ -93,7 +95,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Geolocation is not supported by this browser");
         }
       },
-      getUsers: () => {},
+      getUsers: () => {
+        fetch(backEndURL + "/api/users", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .then((resp) => resp.json())
+          .then((data) => {
+            setStore({ users: data });
+            return data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
     },
   };
 };

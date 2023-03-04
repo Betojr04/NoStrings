@@ -25,6 +25,7 @@ const injectContext = (PassedComponent) => {
       setInterval(() => {
         state.actions.getCurrentLocation();
       }, 6000);
+      state.actions.getUsers();
     }, []);
 
     // The initial value for the context is not null anymore, but the current state of this component,

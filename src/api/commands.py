@@ -1,4 +1,3 @@
-
 import click
 from api.models import db, User
 
@@ -15,12 +14,16 @@ def setup_commands(app):
     Note: 5 is the number of users to add
     """
     @app.cli.command("insert-test-users") # name of our command
-    @click.argument("count") # argument of out command
-    def insert_test_data(count):
+    # @click.argument("count") # argument of out command
+    def insert_test_data():
         print("Creating test users")
-        for x in range(1, int(count) + 1):
+        coordinates = [("Jane", 25.749809, -80.205849), ( "Jim", 25.891762, -80.126991)]
+        for i in range(len(coordinates)):
             user = User()
-            user.email = "test_user" + str(x) + "@test.com"
+            user.full_name = coordinates[i][0]
+            user.latitude = coordinates[i][1]
+            user.longitude = coordinates[i][2]
+            user.email = coordinates[i][0] + "@example.com"
             user.password = "123456"
             user.is_active = True
             db.session.add(user)

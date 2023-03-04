@@ -116,28 +116,14 @@ def send_Message():
     return jsonify('user not found'), 400
 
 
-@api.route('/all-users', methods=['GET'])
+@api.route('/users', methods=['GET'])
 def get_Users():
     users = User.query.all()
     serialized_users =[]
     for user in users:
         serialized_user = user.serialize()
-        serialized_users.append(serialized_user) 
-    male_users = []
-    for user in serialized_users:
-        if user["gender"] == "male":
-            male_users.append(user)
-    female_users = []
-    for user in serialized_users:
-        if user["gender"] == "female":
-            female_users.append(user)
-    payload= {
-            "male_users": male_users,
-            "female_users":female_users,
-        }
-    return jsonify(payload), 200
-    #   serve all the users, this will get the lcoation, and get them on the chats n shit
-    #
+        serialized_users.append(serialized_user)
+    return jsonify(serialized_users), 200
 
 @api.route('/current-location', methods=['PUT'])
 @jwt_required()
