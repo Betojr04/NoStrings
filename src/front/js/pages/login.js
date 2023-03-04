@@ -12,15 +12,6 @@ const Login = () => {
     }
   };
 
-  const handleClick = () => {
-    if (isLoggedIn) {
-      Navigate("/home");
-    } else {
-      // show a message indicating that the user needs to log in first
-      alert("Please log in first.");
-    }
-  };
-
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -60,10 +51,12 @@ const Login = () => {
       .then((result) => {
         console.log(result);
         localStorage.setItem("token", result.access_token);
+        setIsLoggedIn(true);
         Navigate("/home");
       })
       .catch((error) => {
-        console.log(error);
+        alert("invalid credentials");
+        console.log("invalid credentials");
       });
   };
   return (
@@ -128,11 +121,7 @@ const Login = () => {
                         Check me out
                       </label>
                     </div>
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      onClick={handleClick}
-                    >
+                    <button type="submit" className="btn btn-primary">
                       Login
                     </button>
                     <Link to="/signup">Create Account</Link>

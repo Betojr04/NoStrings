@@ -3,11 +3,14 @@ import GoogleMapReact from "google-map-react";
 import { Context } from "../store/appContext";
 
 import "../../styles/map.css";
-
+const greatPlaceStyle = {
+  position: "absolute",
+  transform: "translate(-50%, -50%)",
+};
 // Define the Marker component
 const Marker = (props) => (
-  <div style={{ color: props.color }}>
-    <i class="fa-solid fa-location-dot fa-2xl"> {props.name}</i>
+  <div className="pt-5" style={{ color: props.color, ...greatPlaceStyle }}>
+    <i className="fa-solid fa-location-dot fa-2xl lh-1"> {props.name}</i>
   </div>
 );
 
@@ -18,7 +21,7 @@ let initialPosition = {
 
 export const Map = () => {
   const { store, actions } = useContext(Context);
-
+  console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
   const [guys, setGuys] = useState([
     {
       id: 1,
@@ -27,7 +30,7 @@ export const Map = () => {
       name: "jordan",
       age: 21,
       zipcode: "33154",
-      isOnline: false,
+      isOnline: true,
       isRegistered: false,
       isAnonymous: true,
     },
@@ -93,7 +96,7 @@ export const Map = () => {
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
+        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_KEY }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
@@ -102,6 +105,10 @@ export const Map = () => {
           .filter((item) => item.isRegistered == store.filters.isRegistered)
           .map((marker) => {
             return (
+              // <Marker
+              //   position={{ lat: marker.lat, lng: marker.lng }}
+              //   label={marker.name}
+              // />
               <Marker
                 color="blue"
                 key={marker.id}
@@ -116,6 +123,10 @@ export const Map = () => {
           .filter((item) => item.isAnonymous == store.filters.isAnonymous)
           .map((marker) => {
             return (
+              // <Marker
+              //   position={{ lat: marker.lat, lng: marker.lng }}
+              //   label={marker.name}
+              // />
               <Marker
                 color="blue"
                 key={marker.id}
@@ -130,6 +141,10 @@ export const Map = () => {
           .filter((item) => item.isRegistered == store.filters.isRegistered)
           .map((marker) => {
             return (
+              // <Marker
+              //   position={{ lat: marker.lat, lng: marker.lng }}
+              //   label={marker.name}
+              // />
               <Marker
                 color="red"
                 key={marker.id}
@@ -151,6 +166,10 @@ export const Map = () => {
                 lng={marker.lng}
                 name={marker.name}
               />
+              // <Marker
+              //   position={{ lat: marker.lat, lng: marker.lng }}
+              //   label={marker.name}
+              // />
             );
           })}
       </GoogleMapReact>
