@@ -17,7 +17,7 @@ def setup_commands(app):
     # @click.argument("count") # argument of out command
     def insert_test_data():
         print("Creating test users")
-        coordinates = [("Jane", 25.749809, -80.205849), ( "Jim", 25.891762, -80.126991)]
+        coordinates = [("Jane", 25.749809, -80.205849), ( "Jim", 25.891762, -80.126991),("Jordan", 25.749809, -80.205849), ("Laura", 25.87574236814734, -80.20135529044997), ("Lisa", 25.900598439487815,80.24567187168712)("Michael", 25.891762, -80.126991) ]
         for i in range(len(coordinates)):
             user = User()
             user.full_name = coordinates[i][0]
