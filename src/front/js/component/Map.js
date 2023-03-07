@@ -41,8 +41,8 @@ export const Map = () => {
               <Marker
                 color={marker.gender === "male" ? "blue" : "red"}
                 key={marker.id}
-                lat={marker.lat}
-                lng={marker.lng}
+                lat={marker.latitude}
+                lng={marker.longitude}
                 name={marker.full_name}
               />
             );
