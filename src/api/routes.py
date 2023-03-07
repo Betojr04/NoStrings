@@ -51,7 +51,10 @@ def Login():
     if user is None:
         raise APIException('Invalid Credentials')
     access_token = create_access_token(identity = email)
-    return jsonify(access_token = access_token)
+    return {
+        "token": access_token,
+        "user": jsonify(user)
+        }
    
 
 @api.route('/anon-login', methods=['GET'])

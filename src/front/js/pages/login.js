@@ -29,36 +29,7 @@ const Login = () => {
     }
     // get back to the else statement later
   };
-  const handlelogin = (e) => {
-    e.preventDefault();
-    fetch(process.env.BACKEND_URL + "/api/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((Response) => {
-        if (Response.status === 400) {
-          setError("invalid credentials");
-        } else if (Response.status === 200) {
-          return Response.json();
-        } else {
-          throw new Error("I have a problem");
-        }
-      })
-      .then((result) => {
-        console.log(result);
-        localStorage.setItem("token", result.access_token);
-        setIsLoggedIn(true);
-        Navigate("/home");
-      })
-      .catch((error) => {
-        alert("invalid credentials");
-        console.log("invalid credentials");
-      });
-  };
+
   return (
     <div className="d-flex justify-content-center align-items-center mx-auto">
       <div>
@@ -82,7 +53,12 @@ const Login = () => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-body">
-                  <form className="container mt-5" onSubmit={handlelogin}>
+                  <form
+                    className="container mt-5"
+                    onSubmit={(e) =>
+                      actions.handleLogin(e).then(() => Navigate("/home"))
+                    }
+                  >
                     <div className="mb-3">
                       <label for="exampleInputEmail1" className="form-label">
                         Email address

@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       // changed to users since we are no longer having sepasrate code for guys and girls
+      loggedInUser: null,
       users: [],
       filters: {
         gender: null,
@@ -22,34 +23,32 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       handlelogin: (e) => {
         e.preventDefault();
-        fetch(
-          "https://3001-michbalkany-datingoutof-0yeze9xbh8x.ws-us87.gitpod.io/api/Login",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: email,
-              password: password,
-            }),
-            headers: { "Content-Type": "application/json" },
-          }
-        )
+        return fetch(process.env.BACKEND_URL + "/api/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+          headers: { "Content-Type": "application/json" },
+        })
           .then((Response) => {
-            return Response.json();
-          })
-          .then((result) => {
-            if (
-              typeof result == "string" &&
-              result.includes("Wrong email or password")
-            ) {
-              setError("Wrong email or password");
+            if (Response.status === 400) {
+              setError("invalid credentials");
+            } else if (Response.status === 200) {
+              return Response.json();
             } else {
-              console.log(result);
-              localStorage.setItem("token", result.access_token);
-              Navigate("/home");
+              throw new Error("I have a problem");
             }
           })
+          .then((result) => {
+            console.log(result);
+            localStorage.setItem("token", result.access_token);
+            setIsLoggedIn(true);
+            return result;
+          })
           .catch((error) => {
-            console.log(error);
+            alert("invalid credentials");
+            console.log("invalid credentials");
           });
       },
       handleAnonLogin: (e) => {

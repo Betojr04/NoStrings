@@ -20,18 +20,18 @@ def setup_commands(app):
         print("Creating test users")
         coordinates = [("Jane", 25.749809, -80.205849, "female"), 
         ( "Jim", 25.891762, -80.126991, "male"), 
-        ("Jordan", 25.749809, -80.205849, "male"), 
+        ("Jordan", 25.835552, -80.343100, "male"), 
         ("Laura", 25.87574236814734, -80.20135529044997, "female"), 
-        ("Lisa", 25.900598439487815,80.24567187168712, "female"), 
-        ("Michael", 25.891762, -80.126991, "male")]
+        ("Lisa", 25.900598439487815, -80.24567187168712, "female"), 
+        ("Michael", 25.722401, -80.285079, "male")]
         for i in range(len(coordinates)):
             user = User()
             user.full_name = coordinates[i][0]
             user.gender = coordinates [i][3]
             user.latitude = coordinates[i][1]
             user.longitude = coordinates[i][2]
-            user.email = coordinates[i][0] + "@example.com"
-            user.password = "123456"
+            user.email = coordinates[i][0].lower() + "@example.com"
+            user.password = "134563d4e440f0e418b0f382f23a2cf301af6d7f648ccfae9895018345d779a3"
             user.is_active = True
             db.session.add(user)
             db.session.commit()
