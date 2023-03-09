@@ -28,6 +28,7 @@ const Login = () => {
     let result = actions.handleAnonLogin();
 
     if (result === true) {
+      localStorage.setItem("isAnonymous", true);
       Navigate("/home");
     }
     // get back to the else statement later
@@ -104,6 +105,7 @@ const Login = () => {
                     </div>
                     <button
                       className="btn btn-primary"
+                      data-bs-dismiss="modal"
                       onClick={
                         () =>
                           actions.handleLogin(email, password, setIsLoggedIn)
@@ -170,28 +172,21 @@ const Login = () => {
                       </button>
                     </div>
                   ) : (
-                    <></>
+                    <form>
+                      <div className="modal-footer">
+                        <button
+                          // wrapping in a function because we dont want it to run as soon as the component renders.
+                          onClick={() => Navigate("/home")}
+                          type="button"
+                          className="btn btn-primary"
+                          data-bs-dismiss="modal"
+                        >
+                          Start Cruising
+                        </button>
+                      </div>
+                    </form>
                   )}
                 </div>
-                <form>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button
-                      // wrapping in a function because we dont want it to run as soon as the component renders.
-                      // onClick={() => Navigate("/home")}
-                      type="button"
-                      className="btn btn-primary"
-                    >
-                      Save changes
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>

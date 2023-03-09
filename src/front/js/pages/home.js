@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Map } from "../component/Map";
-// import { Footer } from "../component/footer";
+import { Footer } from "../component/footer";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -14,7 +14,7 @@ export const Home = () => {
       <div className="text-center height-controller">
         <Map />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
