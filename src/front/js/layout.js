@@ -33,7 +33,7 @@ const Layout = () => {
             <Route element={<ChooseRole />} path="/chooserole" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </ScrollToTop>
       </BrowserRouter>
     </div>

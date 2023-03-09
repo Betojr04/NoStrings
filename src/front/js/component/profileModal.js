@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
 const ProfileModal = ({ user }) => {
+  let isAnonymous = localStorage.getItem("isAnonymous");
+
   return (
     <div
       // className="modal fade"
@@ -31,7 +33,11 @@ const ProfileModal = ({ user }) => {
           </div>
           <div className="modal-body">
             <div className="profile-container">
-              <img src="https://images.unsplash.com/photo-1503235930437-8c6293ba41f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpeHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
+              <img
+                className="col-12"
+                src="https://images.unsplash.com/photo-1503235930437-8c6293ba41f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpeHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+              />
+
               <h3>{user?.full_name}</h3>
             </div>
           </div>
