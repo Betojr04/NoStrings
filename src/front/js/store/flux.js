@@ -21,8 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         setStore({ filters: { ...store.filters, ...newFilterValues } });
       },
-      handlelogin: (e) => {
-        e.preventDefault();
+      handleLogin: (email, password, setIsLoggedIn) => {
         return fetch(process.env.BACKEND_URL + "/api/login", {
           method: "POST",
           body: JSON.stringify({
@@ -42,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .then((result) => {
             console.log(result);
-            localStorage.setItem("token", result.access_token);
+            localStorage.setItem("token", result.token);
             setIsLoggedIn(true);
             return result;
           })

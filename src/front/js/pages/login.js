@@ -1,17 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  console.log("new message");
   const handleLogin = () => {
     // check user's credentials and set isLoggedIn state to true if credentials are valid
     if (isValidCredentials) {
       setIsLoggedIn(true);
     }
   };
-
+  let navigate = useNavigate();
+  console.log("is logged in", isLoggedIn);
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -19,17 +20,23 @@ const Login = () => {
   const Navigate = useNavigate();
   const [ageVerified, setAgeVerified] = useState(false);
   // removed navigate link function entirely because it doesnt make sense- Alejandro
-
+  // if (store.users) {
+  //   navigate("/home");
+  // }
   const anonLogin = () => {
     console.log("its running");
     let result = actions.handleAnonLogin();
 
-    if (result == true) {
+    if (result === true) {
       Navigate("/home");
     }
     // get back to the else statement later
   };
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/home");
+    }
+  }, [isLoggedIn]);
   return (
     <div className="d-flex justify-content-center align-items-center mx-auto">
       <div>
@@ -55,9 +62,7 @@ const Login = () => {
                 <div className="modal-body">
                   <form
                     className="container mt-5"
-                    onSubmit={(e) =>
-                      actions.handleLogin(e).then(() => Navigate("/home"))
-                    }
+                    onSubmit={(e) => e.preventDefault()}
                   >
                     <div className="mb-3">
                       <label for="exampleInputEmail1" className="form-label">
@@ -97,7 +102,14 @@ const Login = () => {
                         Check me out
                       </label>
                     </div>
-                    <button type="submit" className="btn btn-primary">
+                    <button
+                      className="btn btn-primary"
+                      onClick={
+                        () =>
+                          actions.handleLogin(email, password, setIsLoggedIn)
+                        // .then(() => Navigate("/home"))
+                      }
+                    >
                       Login
                     </button>
                     <Link to="/signup">Create Account</Link>
@@ -172,7 +184,7 @@ const Login = () => {
                     </button>
                     <button
                       // wrapping in a function because we dont want it to run as soon as the component renders.
-                      onClick={() => Navigate("/home")}
+                      // onClick={() => Navigate("/home")}
                       type="button"
                       className="btn btn-primary"
                     >
