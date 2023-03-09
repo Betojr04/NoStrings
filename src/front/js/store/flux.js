@@ -60,6 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((result) => {
             console.log(result);
             localStorage.setItem("token", result.access_token);
+            localStorage.setItem("isAnonymous", true);
 
             return true;
           })

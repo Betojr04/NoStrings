@@ -28,7 +28,6 @@ const Login = () => {
     let result = actions.handleAnonLogin();
 
     if (result === true) {
-      localStorage.setItem("isAnonymous", true);
       Navigate("/home");
     }
     // get back to the else statement later
