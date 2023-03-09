@@ -23,12 +23,12 @@ let initialPosition = {
 
 export const Map = () => {
   const { store, actions } = useContext(Context);
-  console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
+  // console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
 
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_KEY }}
+        bootstrapURLKeys={{ key: " AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
