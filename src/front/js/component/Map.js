@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { Context } from "../store/appContext";
-
+import { Navigate, useNavigate } from "react-router-dom";
 import "../../styles/map.css";
 const greatPlaceStyle = {
   position: "absolute",
@@ -24,6 +24,13 @@ let initialPosition = {
 export const Map = () => {
   const { store, actions } = useContext(Context);
   // console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
