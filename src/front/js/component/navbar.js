@@ -115,7 +115,8 @@ export const Navbar = () => {
               <OnlyAuthenticated>
                 <button
                   onClick={() => {
-                    localStorage.removeItem("token");
+                    localStorage.clear();
+                    actions.logout();
                     Navigate("/login");
                   }}
                 >

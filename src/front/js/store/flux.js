@@ -7,6 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       // changed to users since we are no longer having sepasrate code for guys and girls
       loggedInUser: null,
       users: [],
+      anonUsers: [],
+
       filters: {
         gender: null,
         isOnline: true,
@@ -51,14 +53,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("invalid credentials");
           });
       },
+      logout: () => {
+        // fetch(process.env.BACKEND_URL + "/api/logout", { method: "DELETE" });
+      },
       handleAnonLogin: (e) => {
         fetch(backEndURL + "/api/anon-login")
-          .then((Response) => {
-            return Response.json();
-          })
-
+          .then((Response) => Response.json())
           .then((result) => {
-            console.log(result);
+            console.log("this is the result of the anon login", result);
             localStorage.setItem("token", result.access_token);
             localStorage.setItem("isAnonymous", true);
 
@@ -69,7 +71,30 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       getCurrentLocation: () => {
-        if (navigator.geolocation && localStorage.getItem("token")) {
+        if (navigator.geolocation && localStorage.getItem("isAnonymous")) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              fetch(backEndURL + "/api/anon-location", {
+                method: "PUT",
+                body: JSON.stringify({
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+              })
+                .then(() => true)
+                .catch((error) => {
+                  console.log(error);
+                });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        } else if (navigator.geolocation && localStorage.getItem("token")) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               fetch(backEndURL + "/api/current-location", {
@@ -93,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
         } else {
-          console.log("Geolocation is not supported by this browser");
+          console.log("something went wrong while retrieving your location");
         }
       },
       getUsers: () => {
@@ -107,6 +132,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((resp) => resp.json())
           .then((data) => {
             setStore({ users: data });
+            return data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        fetch(backEndURL + "/api/anon-users", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+          .then((resp) => resp.json())
+          .then((data) => {
+            setStore({ anonUsers: data });
             return data;
           })
           .catch((error) => {

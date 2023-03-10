@@ -53,7 +53,41 @@ class User(db.Model):
             "groups":list(map(lambda x: x.name, self.groups))
             # do not serialize the password, its a security breach
         }
+class AnonUser(db.Model):
 
+    id = db.Column(db.Integer, primary_key=True)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=True)
+    profile_pic = db.Column(db.String(120), unique=False, nullable=True)
+    # I made the location column a foreign key to the location table instead of a primary key since there can only be one primary key- Beto
+    latitude = db.Column(db.Float, unique=False, nullable=True)
+    longitude = db.Column(db.Float, unique=False, nullable=True)
+    gender = db.Column(db.String(120), unique=False, nullable=True)
+    interests = db.Column(db.String(120), unique=False, nullable=True)
+    sexual_interests = db.Column(db.String(120), unique=False, nullable=True)
+    is_online = db.Column(db.Boolean(), unique=False, nullable=True)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    randnum = db.Column(db.Integer, unique=True, nullable=False)
+
+    
+    def __repr__(self):
+        return f'<AnonUser {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "is_active": self.is_active,
+            "profile_pic": self.profile_pic,
+            "latitude":self.latitude,
+            "longitude":self.longitude,
+            "gender":self.gender,
+            "interests":self.interests,
+            "sexual_interests":self.sexual_interests,
+            "is_online":self.is_online,
+            "created_at":self.created_at,
+            "randnum": self.randnum
+            # do not serialize the password, its a security breach
+        }
 
 class Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
