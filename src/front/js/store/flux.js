@@ -14,8 +14,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         isAnonymous: true,
         interests: ["orgy", "bukake", "exhibition", "gloryHoles", "BDSM"],
       },
+      darkMode: false,
     },
     actions: {
+      setDarkMode: (status) => {
+        const store = getStore();
+        setStore({ darkMode: status });
+      },
       setFilter: (newFilterValues) => {
         console.log("setting new filters", newFilterValues);
         const store = getStore();
