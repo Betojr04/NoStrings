@@ -126,11 +126,9 @@ export const Navbar = () => {
               <OnlyAuthenticated>
                 <button
                   onClick={() => {
-
-                    localStorage.clear();
                     actions.logout();
 
-                   
+                    localStorage.clear();
 
                     Navigate("/login");
                   }}
