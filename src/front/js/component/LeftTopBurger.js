@@ -28,147 +28,108 @@ export const LeftTopBurger = (props) => {
               >
                 <div className="accordion-body">
                   {/* make it only a button */}
-                  <div
-                    className={
-                      "online-filter " +
-                      (store.filters.isOnline ? "active" : "")
-                    }
-                    onClick={() => {
-                      actions.setFilter({
-                        isOnline: !store.filters.isOnline,
-                      });
-                    }}
-                  >
-                    Is online
-                  </div>
+
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item">is connected now</li>
-                    <li className="list-group-item">Has Profile Photo</li>
+                    <div
+                      className={
+                        "online-filter " +
+                        (store.filters.isOnline ? "active" : "")
+                      }
+                      onClick={() => {
+                        actions.setFilter({
+                          isOnline: !store.filters.isOnline,
+                        });
+                      }}
+                    >
+                      <li className="list-group-item border-0">
+                        is connected now
+                      </li>
+                    </div>
+                    <div
+                      className={
+                        "online-filter " +
+                        (store.filters.hasProfilePhoto ? "active" : "")
+                      }
+                      onClick={() => {
+                        actions.setFilter({
+                          hasProfilePhoto: !store.filters.hasProfilePhoto,
+                        });
+                      }}
+                    >
+                      <li className="list-group-item border-0">
+                        Has Profile Photo
+                      </li>
+                    </div>
+
                     <li className="list-group-item">
                       <button
                         className="accordion-button dropdown"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseOne"
+                        data-bs-target="#panelsStayOpen-collapseTwo"
                         aria-expanded="true"
-                        aria-controls="panelsStayOpen-collapseOne"
+                        aria-controls="panelsStayOpen-collapseTwo"
                       >
                         Profile Type
                       </button>
+                      <div
+                        id="panelsStayOpen-collapseTwo"
+                        className="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingTwo"
+                      >
+                        <p className="accordion-body">Registered</p>
+                        <p className="accordion-body">Anonymous</p>
+                      </div>
                     </li>
                     <li className="list-group-item">
                       <button
                         className="accordion-button"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseOne"
+                        data-bs-target="#panelsStayOpen-collapseThree"
                         aria-expanded="true"
-                        aria-controls="panelsStayOpen-collapseOne"
+                        aria-controls="panelsStayOpen-collapseThree"
                       >
                         Is Hosting
                       </button>
-                    </li>
-                    <li className="list-group-item">And a fifth one</li>
-                  </ul>
-                </div>
-                <div className="accordion-body">
-                  {/* make it only a button */}
-                  <strong>Has Profile Photo</strong>
-                </div>
-
-                <div className="dropdown">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Profile Type
-                  </button>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton1"
-                  >
-                    <li>
                       <div
-                        className={
-                          "is-registered " +
-                          (store.filters.isRegistered ? "active" : "")
-                        }
-                        onClick={() => {
-                          actions.setFilter({
-                            isRegistered: !store.filters.isRegistered,
-                          });
-                        }}
+                        id="panelsStayOpen-collapseThree"
+                        className="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingThree"
                       >
-                        <a className="dropdown-item" href="#">
-                          Registered
-                        </a>
+                        <p>A group</p>
+                        <p>A gloryhole</p>
+                        <p>In my hotel room</p>
+                        <p>at my place</p>
+                        <p>In my car</p>
                       </div>
                     </li>
-                    <li>
-                      <div
-                        className={
-                          "is-anonymous " +
-                          (store.filters.isAnonymous ? "active" : "")
-                        }
-                        onClick={() => {
-                          actions.setFilter({
-                            isAnonymous: !store.filters.isAnonymous,
-                          });
-                        }}
-                      >
-                        <a className="dropdown-item" href="#">
-                          Anonymous
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="dropdown">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Hosting Type
-                  </button>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton1"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
-                    </li>
+                    <div
+                      className={
+                        "online-filter " +
+                        (store.filters.chatHistory ? "active" : "")
+                      }
+                      onClick={() => {
+                        actions.setFilter({
+                          chatHistory: !store.filters.chatHistory,
+                        });
+                      }}
+                    >
+                      <li className="list-group-item">Has Chat History</li>
+                    </div>
                   </ul>
                 </div>
               </div>
             </div>
             <div className="accordion-item">
-              <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
+              <h2 className="accordion-header" id="panelsStayOpen-headingFour">
                 <button
                   className="accordion-button collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#panelsStayOpen-collapseTwo"
+                  data-bs-target="#panelsStayOpen-collapseFour"
                   aria-expanded="false"
-                  aria-controls="panelsStayOpen-collapseTwo"
+                  aria-controls="panelsStayOpen-collapseFour"
                 >
                   {/* make 'girls' a button and boolean so when you onyl click guys (not the dropdown) it filters out girls or no girls */}
                   Girls
