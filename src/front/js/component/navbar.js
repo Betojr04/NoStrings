@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import OnlyAuthenticated from "./onlyAuthenticated";
 import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,9 +9,20 @@ import ProfileModal from "./profileModal";
 export const Navbar = () => {
   const [showOffCanvas, setShowOffCanvas] = useState(false);
   const [leftBurger, setLeftBurger] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode"))
+      ? JSON.parse(localStorage.getItem("darkMode"))
+      : false
+  );
+
   let Navigate = useNavigate();
   const { store, actions } = useContext(Context);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+    actions.setDarkMode(darkMode);
+  }, [darkMode]);
+  console.log(store.darkMode);
 
   return (
     <nav className="navbar bg-light  fixed-top">
@@ -115,8 +126,12 @@ export const Navbar = () => {
               <OnlyAuthenticated>
                 <button
                   onClick={() => {
+
                     localStorage.clear();
                     actions.logout();
+
+                   
+
                     Navigate("/login");
                   }}
                 >

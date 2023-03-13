@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { Context } from "../store/appContext";
-
+import { Navigate, useNavigate } from "react-router-dom";
 import "../../styles/map.css";
+import { darkOption, lightOption } from "./theme";
+
 const greatPlaceStyle = {
   position: "absolute",
   transform: "translate(-50%, -50%)",
@@ -24,10 +26,18 @@ let initialPosition = {
 export const Map = () => {
   const { store, actions } = useContext(Context);
   // console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
+        options={store.darkMode ? darkOption : lightOption}
         bootstrapURLKeys={{ key: " AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
