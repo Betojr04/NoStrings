@@ -162,3 +162,13 @@ def update_Anon_Location():
     db.session.commit()
     return jsonify({"msg": "okay"}) ,200
 
+@api.route('/anon-logout', methods=['DELETE'])
+@jwt_required()
+def anon_logout():
+    anon_user = AnonUser.query.filter_by(randnum= get_jwt_identity()).first()
+    if anon_user is not None:
+
+        db.session.delete(anon_user)
+        db.session.commit()
+        return jsonify("deletion successful"), 200
+    return jsonify("something went wrong while deleting anon user"), 400

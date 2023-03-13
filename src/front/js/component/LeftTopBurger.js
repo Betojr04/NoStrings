@@ -41,6 +41,39 @@ export const LeftTopBurger = (props) => {
                   >
                     Is online
                   </div>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">is connected now</li>
+                    <li className="list-group-item">Has Profile Photo</li>
+                    <li className="list-group-item">
+                      <button
+                        className="accordion-button dropdown"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne"
+                        aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne"
+                      >
+                        Profile Type
+                      </button>
+                    </li>
+                    <li className="list-group-item">
+                      <button
+                        className="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne"
+                        aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne"
+                      >
+                        Is Hosting
+                      </button>
+                    </li>
+                    <li className="list-group-item">And a fifth one</li>
+                  </ul>
+                </div>
+                <div className="accordion-body">
+                  {/* make it only a button */}
+                  <strong>Has Profile Photo</strong>
                 </div>
 
                 <div className="dropdown">
@@ -93,10 +126,7 @@ export const LeftTopBurger = (props) => {
                     </li>
                   </ul>
                 </div>
-                <div className="accordion-body">
-                  {/* make it only a button */}
-                  <strong>Has Profile Photo</strong>
-                </div>
+
                 <div className="dropdown">
                   <button
                     className="btn btn-secondary dropdown-toggle"

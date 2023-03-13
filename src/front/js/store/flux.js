@@ -29,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ filters: { ...store.filters, ...newFilterValues } });
       },
       handleLogin: (email, password, setIsLoggedIn) => {
+        localStorage.removeItem("isAnonymous");
         return fetch(process.env.BACKEND_URL + "/api/login", {
           method: "POST",
           body: JSON.stringify({
@@ -49,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((result) => {
             console.log(result);
             localStorage.setItem("token", result.token);
-            localStorage.setItem("isAnonymous", false);
+            // localStorage.setItem("isAnonymous", false);
             setIsLoggedIn(true);
             return result;
           })
@@ -59,7 +60,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       logout: () => {
-        // fetch(process.env.BACKEND_URL + "/api/logout", { method: "DELETE" });
+        if (JSON.parse(localStorage.getItem("isAnonymous"))) {
+          console.log("logout executed");
+          fetch(backEndURL + "/api/anon-logout", {
+            method: "DELETE",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+            .then((resp) => resp.json())
+            .then((result) => console.log("result success", result))
+            .catch((error) => console.log(error));
+        }
       },
       handleAnonLogin: (e) => {
         fetch(backEndURL + "/api/anon-login")
