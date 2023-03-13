@@ -57,6 +57,18 @@ export const Map = () => {
               />
             );
           })}
+
+        {store.anonUsers.map((marker) => {
+          return (
+            <Marker
+              color={marker.gender === "male" ? "blue" : "red"}
+              key={marker.id}
+              lat={marker.latitude}
+              lng={marker.longitude}
+              name={marker.randnum}
+            />
+          );
+        })}
       </GoogleMapReact>
     </div>
   );

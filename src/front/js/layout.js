@@ -26,7 +26,7 @@ const Layout = () => {
 
           <Routes>
             {/* removed because the anonymous functionality was not working properly */}
-            <Route element={<Home />} path="/" />
+            <Route element={<Login />} path="/" />
             <Route element={<Home />} path="/home" />
             <Route element={<Login />} path="/login" />
             <Route element={<Signup />} path="/signup" />

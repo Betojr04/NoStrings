@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Messages
+from api.models import db, User, Messages,AnonUser
 from api.utils import generate_sitemap, APIException
 import hashlib
 from datetime import datetime
@@ -60,9 +60,11 @@ def Login():
 @api.route('/anon-login', methods=['GET'])
 def anon_login():
     randnum = random.randint(0,9999999)
-   
+    new_user = AnonUser(randnum = randnum, is_active = True, created_at = datetime.now())
+    db.session.add(new_user)
+    db.session.commit()
     access_token = create_access_token(identity = randnum)
-    return jsonify(access_token = access_token)
+    return jsonify(access_token = access_token, randnum= randnum)
     
     
 
@@ -128,6 +130,15 @@ def get_Users():
         serialized_users.append(serialized_user)
     return jsonify(serialized_users), 200
 
+@api.route('/anon-users', methods=['GET'])
+def get_Anon_Users():
+    users = AnonUser.query.all()
+    serialized_users =[]
+    for user in users:
+        serialized_user = user.serialize()
+        serialized_users.append(serialized_user)
+    return jsonify(serialized_users), 200
+
 @api.route('/current-location', methods=['PUT'])
 @jwt_required()
 def update_Location():
@@ -139,4 +150,15 @@ def update_Location():
     db.session.commit()
     return jsonify({"msg": "okay"}) ,200
 
+@api.route('/anon-location', methods=['PUT'])
+@jwt_required()
+def update_Anon_Location():
+    randnum = get_jwt_identity()
+
+    incomming_payload = request.get_json()
+    anon_user = AnonUser.query.filter_by(randnum= randnum ).first()
+    anon_user.latitude= incomming_payload["lat"]
+    anon_user.longitude= incomming_payload["lng"]
+    db.session.commit()
+    return jsonify({"msg": "okay"}) ,200
 
