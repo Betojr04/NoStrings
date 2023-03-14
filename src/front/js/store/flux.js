@@ -11,11 +11,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       filters: {
         gender: null,
+        genderF: null,
         isOnline: true,
+        isOnlineF: true,
         hasProfilePhoto: true,
+        hasProfilePhotoF: true,
         chatHistory: true,
+        chatHistoryF: true,
         isRegistered: true,
+        isRegisteredF: true,
         isAnonymous: true,
+        isAnonymousF: true,
         interests: ["orgy", "bukake", "exhibition", "gloryHoles", "BDSM"],
       },
       darkMode: false,
