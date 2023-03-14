@@ -13,3 +13,15 @@
   padding: 5px;
   font-weight: 700;
 }
+
+.leftBugerDiv {
+  width: 400px;
+  height: 100vh;
+  overflow-y: auto;
+  position: absolute;
+  top: 47px;
+  left: -8px;
+}
+button.navbar-toggler.bg-light:focus {
+  box-shadow: none;
+}
