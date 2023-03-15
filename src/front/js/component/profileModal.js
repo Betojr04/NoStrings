@@ -30,9 +30,7 @@ const ProfileModal = ({ user, showProfileModal }) => {
                 className="col-12"
                 src="https://images.unsplash.com/photo-1503235930437-8c6293ba41f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMHBpeHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
               />
-              <div>
-                <i className="fa-regular fa-circle"></i>
-              </div>
+
               <h3>{user?.full_name}</h3>
             </div>
           </div>
