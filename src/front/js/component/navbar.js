@@ -6,9 +6,13 @@ import preferenceIcon from "../../img/options.png";
 import { Context } from "../store/appContext";
 import { LeftTopBurger } from "./LeftTopBurger";
 import ProfileModal from "./profileModal";
+import { MyProfile } from "./MyProfile";
 export const Navbar = () => {
   const [showOffCanvas, setShowOffCanvas] = useState(false);
   const [leftBurger, setLeftBurger] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const [otherProfile, setOtherProfile] = useState(true);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [darkMode, setDarkMode] = useState(
     JSON.parse(localStorage.getItem("darkMode"))
       ? JSON.parse(localStorage.getItem("darkMode"))
@@ -56,87 +60,102 @@ export const Navbar = () => {
           <button
             type="button"
             className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
+            // data-bs-toggle="modal"
+            // data-bs-target="#staticBackdrop"
+            onClick={() => {
+              setProfile(!profile);
+              setOtherProfile(!otherProfile);
+              setShowProfileModal(!showProfileModal);
+            }}
           >
             My Profile
           </button>
-          <ProfileModal user={store.loggedInUser} />
 
-          <div className="offcanvas-body">
-            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Dark Mode
-                </a>
-                <div
-                  className="form-check form-switch"
-                  onClick={() => setDarkMode(!darkMode)}
+          <ProfileModal
+            showProfileModal={showProfileModal}
+            user={store.loggedInUser}
+          />
+
+          {profile && <div className="boxTest"></div>}
+          {/* <MyProfile /> */}
+
+          {otherProfile && (
+            <div className="offcanvas-body">
+              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="#">
+                    Dark Mode
+                  </a>
+                  <div
+                    className="form-check form-switch"
+                    onClick={() => setDarkMode(!darkMode)}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckChecked"
+                      checked={darkMode}
+                    />
+                    <label
+                      className="form-check-label"
+                      for="flexSwitchCheckChecked"
+                    ></label>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    Link
+                  </a>
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Dropdown
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Action
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Another action
+                      </a>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Something else here
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <OnlyAuthenticated>
+                <button
+                  className="logout-button"
+                  onClick={() => {
+                    actions.logout();
+
+                    localStorage.clear();
+
+                    Navigate("/login");
+                  }}
                 >
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="flexSwitchCheckChecked"
-                    checked={darkMode}
-                  />
-                  <label
-                    className="form-check-label"
-                    for="flexSwitchCheckChecked"
-                  ></label>
-                </div>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <OnlyAuthenticated>
-              <button
-                onClick={() => {
-                  actions.logout();
-
-                  localStorage.clear();
-
-                  Navigate("/login");
-                }}
-              >
-                Logout
-              </button>
-            </OnlyAuthenticated>
-          </div>
+                  Logout
+                </button>
+              </OnlyAuthenticated>
+            </div>
+          )}
         </div>
       </div>
       <LeftTopBurger leftBurger={leftBurger} />

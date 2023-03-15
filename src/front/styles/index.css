@@ -12,8 +12,64 @@ body {
 .modal-backdrop {
   position: sticky !important;
 }
-
+.modal-headerTwo {
+  backdrop-filter: blur (15px);
+  background-color: lightblue;
+}
+.modal-headerThree {
+  backdrop-filter: blur (15px);
+  background-color: lightblue;
+}
 .preferenceIcon {
   width: 40px;
   height: 40px;
+}
+.logout-button {
+  background-color: #f1f1f1;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+/* .offcanvas.offcanvas-end.show {
+  visibility: visible;
+} */
+.show-profile-modal {
+  display: contents;
+}
+.modal-dialog-custom {
+  max-width: 500px;
+  margin: -0.2rem;
+}
+.modal-body-custom {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 2rem;
+  margin-bottom: 104px;
+}
+.modal-content-custom {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  border-radius: 0.3rem;
+  outline: 0;
+  height: 86vh;
+}
+.col-12 {
+  margin-top: 50px;
 }
