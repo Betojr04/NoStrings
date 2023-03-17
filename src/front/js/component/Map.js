@@ -42,23 +42,33 @@ export const Map = () => {
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
-        {store.users
-          // .filter((item) => item.isOnline == store.filters.isOnline)
-          // .filter((item) => item.isRegistered == store.filters.isRegistered)
-          // .filter((item) => item.isAnonymous == store.filters.isAnonymous)
-          .map((marker) => {
-            return (
-              <Marker
-                color={marker.gender === "male" ? "blue" : "red"}
-                key={marker.id}
-                lat={marker.latitude}
-                lng={marker.longitude}
-                name={marker.full_name}
-              />
-            );
-          })}
+        {store.filters.isOnline == false
+          ? store.users.map((marker) => {
+              return (
+                <Marker
+                  color={marker.gender === "male" ? "blue" : "red"}
+                  key={marker.id}
+                  lat={marker.latitude}
+                  lng={marker.longitude}
+                  name={marker.full_name}
+                />
+              );
+            })
+          : store.users
+              .filter((item) => item.isOnline == true)
+              .map((marker) => {
+                return (
+                  <Marker
+                    color={marker.gender === "male" ? "blue" : "red"}
+                    key={marker.id}
+                    lat={marker.latitude}
+                    lng={marker.longitude}
+                    name={marker.full_name}
+                  />
+                );
+              })}
 
-        {store.anonUsers.map((marker) => {
+        {/* {store.anonUsers.map((marker) => {
           return (
             <Marker
               color={marker.gender === "male" ? "blue" : "red"}
@@ -68,7 +78,7 @@ export const Map = () => {
               name={marker.randnum}
             />
           );
-        })}
+        })} */}
       </GoogleMapReact>
     </div>
   );

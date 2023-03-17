@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/chatBox.css";
-// import io from "socket.io-client";
 
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [send, setSend] = useState(false);
-  // let socket = io.connect(
-  //   "https://3001-michbalkany-datingoutof-11i75l2v5zx.ws-us88.gitpod.io"
-  // );
-  // socket.on("message", function (data) {
-  //   console.log("Received message: " + data);
-  // });
+
   let backendUrl = process.env.BACKEND_URL;
 
   function sendMessage(message) {
+    console.log(backendUrl);
     fetch(backendUrl + "/api/chat", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         message: message,
