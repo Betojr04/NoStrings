@@ -33,7 +33,7 @@ export const Map = () => {
       navigate("/login");
     }
   }, []);
-
+  console.log(store.users);
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
@@ -42,24 +42,30 @@ export const Map = () => {
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
-        {store.filters.isOnline == false
-          ? store.users.map((marker) => {
-              return (
-                <Marker
-                  color={marker.gender === "male" ? "blue" : "red"}
-                  key={marker.id}
-                  lat={marker.latitude}
-                  lng={marker.longitude}
-                  name={marker.full_name}
-                />
-              );
-            })
-          : store.users
-              .filter((item) => item.isOnline == true)
+        {store.filters.isOnline == true
+          ? store.users
+              .filter(
+                (item) => item.is_online == true && item.gender === "male"
+              )
               .map((marker) => {
                 return (
                   <Marker
-                    color={marker.gender === "male" ? "blue" : "red"}
+                    color={"blue"}
+                    key={marker.id}
+                    lat={marker.latitude}
+                    lng={marker.longitude}
+                    name={marker.full_name}
+                  />
+                );
+              })
+          : store.users
+              .filter(
+                (item) => item.is_online == true && item.gender === "female"
+              )
+              .map((marker) => {
+                return (
+                  <Marker
+                    color={"pink"}
                     key={marker.id}
                     lat={marker.latitude}
                     lng={marker.longitude}
