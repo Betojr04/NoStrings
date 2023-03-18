@@ -33,7 +33,11 @@ export const Map = () => {
       navigate("/login");
     }
   }, []);
-  console.log(store.users);
+  console.log(
+    store.users.filter(
+      (item) => item.is_online == true && item.gender === "male"
+    )
+  );
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
       <GoogleMapReact
