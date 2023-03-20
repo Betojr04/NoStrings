@@ -34,9 +34,10 @@ export const Map = () => {
     }
   }, []);
   console.log(
-    store.users.filter(
-      (item) => item.is_online == true && item.gender === "male"
-    )
+    store.users
+    // .filter(
+    //   (item) => item.is_online == true && item.gender === "male"
+    // )
   );
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
@@ -46,15 +47,14 @@ export const Map = () => {
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
-        {store.filters.isOnline == true
+        {store.filters.isOnline && store.filters.isOnlineF
           ? store.users
-              .filter(
-                (item) => item.is_online == true && item.gender === "male"
-              )
+              .filter((item) => item.is_online == true)
               .map((marker) => {
+                console.log("hello from male marker");
                 return (
                   <Marker
-                    color={"blue"}
+                    color={marker.gender == "male" ? "blue" : "red"}
                     key={marker.id}
                     lat={marker.latitude}
                     lng={marker.longitude}
@@ -62,14 +62,33 @@ export const Map = () => {
                   />
                 );
               })
-          : store.users
+          : store.filters.isOnlineF
+          ? store.users
               .filter(
                 (item) => item.is_online == true && item.gender === "female"
               )
               .map((marker) => {
+                console.log("hello from female marker");
                 return (
                   <Marker
-                    color={"pink"}
+                    color={"red"}
+                    key={marker.id}
+                    lat={marker.latitude}
+                    lng={marker.longitude}
+                    name={marker.full_name}
+                  />
+                );
+              })
+          : store.filters.isOnline &&
+            store.users
+              .filter(
+                (item) => item.is_online == true && item.gender === "male"
+              )
+              .map((marker) => {
+                console.log("hello from female marker");
+                return (
+                  <Marker
+                    color={"blue"}
                     key={marker.id}
                     lat={marker.latitude}
                     lng={marker.longitude}
