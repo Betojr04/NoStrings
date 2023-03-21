@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import "../../styles/map.css";
 import { darkOption, lightOption } from "./theme";
+import ProfileModal from "./profileModal";
 
 const greatPlaceStyle = {
   position: "absolute",
@@ -33,14 +34,10 @@ export const Map = () => {
       navigate("/login");
     }
   }, []);
-  console.log(
-    store.users
-    // .filter(
-    //   (item) => item.is_online == true && item.gender === "male"
-    // )
-  );
+
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
+      {/* <ProfileModal /> */}
       <GoogleMapReact
         options={store.darkMode ? darkOption : lightOption}
         bootstrapURLKeys={{ key: " AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
@@ -53,13 +50,15 @@ export const Map = () => {
               .map((marker) => {
                 console.log("hello from male marker");
                 return (
-                  <Marker
-                    color={marker.gender == "male" ? "blue" : "red"}
-                    key={marker.id}
-                    lat={marker.latitude}
-                    lng={marker.longitude}
-                    name={marker.full_name}
-                  />
+                  <div onClick={() => {}}>
+                    <Marker
+                      color={marker.gender == "male" ? "blue" : "red"}
+                      key={marker.id}
+                      lat={marker.latitude}
+                      lng={marker.longitude}
+                      name={marker.full_name}
+                    />
+                  </div>
                 );
               })
           : store.filters.isOnlineF
@@ -88,6 +87,7 @@ export const Map = () => {
                 console.log("hello from female marker");
                 return (
                   <Marker
+                    onClick
                     color={"blue"}
                     key={marker.id}
                     lat={marker.latitude}
