@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GenderSelector from "../component/GenderSelector";
 
 const Signup = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState("");
   const Navigate = useNavigate();
+  const [genderVerified, setGenderVerified] = useState(false);
+
   console.log(email, password);
   const createAccount = (e) => {
     console.log("create account function being called");
@@ -16,6 +19,7 @@ const Signup = () => {
       body: JSON.stringify({
         email: email,
         password: password,
+        gender: genderVerified,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -67,6 +71,7 @@ const Signup = () => {
           id="exampleInputPassword1"
         />
       </div>
+
       <div className="mb-3 form-check">
         <input
           type="checkbox"
@@ -74,9 +79,10 @@ const Signup = () => {
           id="exampleCheck1"
         />
         <label className="form-check-label" for="exampleCheck1">
-          Remeber Meee
+          Remeber Me
         </label>
       </div>
+      <GenderSelector gender={genderVerified} setGender={setGenderVerified} />
       <button type="submit" className="btn btn-primary">
         Create Account
       </button>

@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       // changed to users since we are no longer having sepasrate code for guys and girls
       loggedInUser: null,
       users: [],
-      anonUsers: [],
       openedProfile: null,
       filters: {
         gender: null,
@@ -81,8 +80,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             .catch((error) => console.log(error));
         }
       },
-      handleAnonLogin: (e) => {
-        fetch(backEndURL + "/api/anon-login")
+      handleAnonLogin: (gender) => {
+        return fetch(process.env.BACKEND_URL + "/api/anon-login", {
+          method: "POST",
+          body: JSON.stringify({
+            gender: gender,
+          }),
+          headers: { "Content-Type": "application/json" },
+        })
           .then((Response) => Response.json())
           .then((result) => {
             console.log("this is the result of the anon login", result);

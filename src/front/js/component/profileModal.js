@@ -21,7 +21,7 @@ const ProfileModal = ({ user, showProfileModal }) => {
             >
               {!isAnonymous ? "Registered Profile" : "Anonymous Profile"}
             </h1>
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column" onClick={() => {}}>
               <i className="fa-solid fa-user-pen ms-auto me-3 my-1"></i>
             </div>
           </div>

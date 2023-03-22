@@ -26,7 +26,7 @@ let initialPosition = {
 
 export const Map = () => {
   const { store, actions } = useContext(Context);
-  // console.log("googleMapsKey", process.env.GOOGLE_MAPS_KEY);
+
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -48,17 +48,16 @@ export const Map = () => {
           ? store.users
               .filter((item) => item.is_online == true)
               .map((marker) => {
-                console.log("hello from male marker");
                 return (
-                  <div onClick={() => {}}>
-                    <Marker
-                      color={marker.gender == "male" ? "blue" : "red"}
-                      key={marker.id}
-                      lat={marker.latitude}
-                      lng={marker.longitude}
-                      name={marker.full_name}
-                    />
-                  </div>
+                  // <div onClick={() => {}}>
+                  <Marker
+                    color={marker.gender == "male" ? "blue" : "red"}
+                    key={marker.id}
+                    lat={marker.latitude}
+                    lng={marker.longitude}
+                    name={marker.full_name}
+                  />
+                  // </div>
                 );
               })
           : store.filters.isOnlineF
@@ -87,7 +86,7 @@ export const Map = () => {
                 console.log("hello from female marker");
                 return (
                   <Marker
-                    onClick
+                    // onClick
                     color={"blue"}
                     key={marker.id}
                     lat={marker.latitude}
@@ -96,18 +95,6 @@ export const Map = () => {
                   />
                 );
               })}
-
-        {/* {store.anonUsers.map((marker) => {
-          return (
-            <Marker
-              color={marker.gender === "male" ? "blue" : "red"}
-              key={marker.id}
-              lat={marker.latitude}
-              lng={marker.longitude}
-              name={marker.randnum}
-            />
-          );
-        })} */}
       </GoogleMapReact>
     </div>
   );
