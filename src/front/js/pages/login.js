@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
+import GenderSelector from "../component/GenderSelector";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,13 +20,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const Navigate = useNavigate();
   const [ageVerified, setAgeVerified] = useState(false);
+  const [genderVerified, setGenderVerified] = useState(false);
   // removed navigate link function entirely because it doesnt make sense- Alejandro
   // if (store.users) {
   //   navigate("/home");
   // }
   const anonLogin = () => {
     console.log("its running");
-    let result = actions.handleAnonLogin();
+    let result = actions.handleAnonLogin(genderVerified);
 
     if (result === true) {
       Navigate("/home");
@@ -127,9 +129,6 @@ const Login = () => {
             className="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal2"
-            onClick={() => {
-              anonLogin();
-            }}
           >
             Use Anonymously
           </button>
@@ -170,12 +169,20 @@ const Login = () => {
                         I am over 18 years old
                       </button>
                     </div>
+                  ) : !genderVerified ? (
+                    <GenderSelector
+                      gender={genderVerified}
+                      setGender={setGenderVerified}
+                    />
                   ) : (
                     <form>
                       <div className="modal-footer">
                         <button
                           // wrapping in a function because we dont want it to run as soon as the component renders.
-                          onClick={() => Navigate("/home")}
+                          onClick={() => {
+                            anonLogin();
+                            Navigate("/home");
+                          }}
                           type="button"
                           className="btn btn-primary"
                           data-bs-dismiss="modal"

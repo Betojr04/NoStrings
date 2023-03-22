@@ -36,7 +36,7 @@ def create_account():
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
     has_email = User.query.filter_by(email = email).first()
     if has_email is None:
-        new_user = User(email = email, password = password, is_active = True, created_at = datetime.now(),randnum = random.randint(0,9999999))
+        new_user = User(gender =body["gender"], email = email, password = password, is_active = True, created_at = datetime.now(),randnum = random.randint(0,9999999))
         db.session.add(new_user)
         db.session.commit()
         return jsonify('Successfully Created Account')
@@ -62,10 +62,12 @@ def Login():
         })
    
 
-@api.route('/anon-login', methods=['GET'])
+@api.route('/anon-login', methods=['POST'])
 def anon_login():
     randnum = random.randint(0,9999999)
-    new_user = User(randnum = randnum, is_online= True, created_at = datetime.now())
+    body = request.get_json(force = True)
+    gender = body['gender']
+    new_user = User(gender = gender, randnum = randnum, is_online= True, created_at = datetime.now())
     print(new_user, "this is new anon user")
     db.session.add(new_user)
     db.session.commit()
@@ -165,9 +167,8 @@ def update_Location():
 @jwt_required()
 def update_Anon_Location():
     randnum = get_jwt_identity()
-
     incomming_payload = request.get_json()
-    anon_user = AnonUser.query.filter_by(randnum= randnum ).first()
+    anon_user = User.query.filter_by(randnum= randnum ).first()
     anon_user.latitude= incomming_payload["lat"]
     anon_user.longitude= incomming_payload["lng"]
     db.session.commit()
@@ -176,7 +177,7 @@ def update_Anon_Location():
 @api.route('/anon-logout', methods=['DELETE'])
 @jwt_required()
 def anon_logout():
-    anon_user = AnonUser.query.filter_by(randnum= get_jwt_identity()).first()
+    anon_user = User.query.filter_by(randnum= get_jwt_identity()).first()
     if anon_user is not None:
 
         db.session.delete(anon_user)
