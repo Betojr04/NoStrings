@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import "../../styles/map.css";
 import { darkOption, lightOption } from "./theme";
+import ProfileModal from "./profileModal";
 
 const greatPlaceStyle = {
   position: "absolute",
@@ -33,28 +34,43 @@ export const Map = () => {
       navigate("/login");
     }
   }, []);
-  console.log(
-    store.users.filter(
-      (item) => item.is_online == true && item.gender === "male"
-    )
-  );
+
   return (
     <div style={{ height: "89.5vh", width: "100%" }}>
+      {/* <ProfileModal /> */}
       <GoogleMapReact
         options={store.darkMode ? darkOption : lightOption}
         bootstrapURLKeys={{ key: " AIzaSyDW_XLxh1AnGsFRN5FgZ-n_x8A5E-jEtKo" }}
         defaultCenter={initialPosition.center}
         defaultZoom={initialPosition.zoom}
       >
-        {store.filters.isOnline == true
+        {store.filters.isOnline && store.filters.isOnlineF
+          ? store.users
+              .filter((item) => item.is_online == true)
+              .map((marker) => {
+                console.log("hello from male marker");
+                return (
+                  <div onClick={() => {}}>
+                    <Marker
+                      color={marker.gender == "male" ? "blue" : "red"}
+                      key={marker.id}
+                      lat={marker.latitude}
+                      lng={marker.longitude}
+                      name={marker.full_name}
+                    />
+                  </div>
+                );
+              })
+          : store.filters.isOnlineF
           ? store.users
               .filter(
-                (item) => item.is_online == true && item.gender === "male"
+                (item) => item.is_online == true && item.gender === "female"
               )
               .map((marker) => {
+                console.log("hello from female marker");
                 return (
                   <Marker
-                    color={"blue"}
+                    color={"red"}
                     key={marker.id}
                     lat={marker.latitude}
                     lng={marker.longitude}
@@ -62,14 +78,17 @@ export const Map = () => {
                   />
                 );
               })
-          : store.users
+          : store.filters.isOnline &&
+            store.users
               .filter(
-                (item) => item.is_online == true && item.gender === "female"
+                (item) => item.is_online == true && item.gender === "male"
               )
               .map((marker) => {
+                console.log("hello from female marker");
                 return (
                   <Marker
-                    color={"pink"}
+                    onClick
+                    color={"blue"}
                     key={marker.id}
                     lat={marker.latitude}
                     lng={marker.longitude}

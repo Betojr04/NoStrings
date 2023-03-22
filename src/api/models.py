@@ -17,9 +17,10 @@ db = SQLAlchemy()
 class User(db.Model):
     full_name = db.Column(db.String(255), nullable=True)
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=False, nullable=True)
+    randnum = db.Column(db.Integer, unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=True)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=True)
     age = db.Column(db.Integer, unique=False, nullable=True)
     profile_pic = db.Column(db.String(120), unique=False, nullable=True)
     # I made the location column a foreign key to the location table instead of a primary key since there can only be one primary key- Beto
@@ -30,9 +31,9 @@ class User(db.Model):
     sexual_interests = db.Column(db.String(120), unique=False, nullable=True)
     is_online = db.Column(db.Boolean(), unique=False, nullable=True)
     current_plan = db.Column(db.String(120), unique=False, nullable=True)
-    groups = db.relationship('Groups', backref="user", lazy='dynamic')
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    groups = db.relationship('Groups', backref="groups", lazy='dynamic')
     
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     
     def __repr__(self):
         return f'<User {self.email}>'
@@ -50,42 +51,8 @@ class User(db.Model):
             "sexual_interests":self.sexual_interests,
             "is_online":self.is_online,
             "created_at":self.created_at,
-            "groups":list(map(lambda x: x.name, self.groups))
-            # do not serialize the password, its a security breach
-        }
-class AnonUser(db.Model):
-
-    id = db.Column(db.Integer, primary_key=True)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    age = db.Column(db.Integer, unique=False, nullable=True)
-    profile_pic = db.Column(db.String(120), unique=False, nullable=True)
-    # I made the location column a foreign key to the location table instead of a primary key since there can only be one primary key- Beto
-    latitude = db.Column(db.Float, unique=False, nullable=True)
-    longitude = db.Column(db.Float, unique=False, nullable=True)
-    gender = db.Column(db.String(120), unique=False, nullable=True)
-    interests = db.Column(db.String(120), unique=False, nullable=True)
-    sexual_interests = db.Column(db.String(120), unique=False, nullable=True)
-    is_online = db.Column(db.Boolean(), unique=False, nullable=True)
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    randnum = db.Column(db.Integer, unique=True, nullable=False)
-
-    
-    def __repr__(self):
-        return f'<AnonUser {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "is_active": self.is_active,
-            "profile_pic": self.profile_pic,
-            "latitude":self.latitude,
-            "longitude":self.longitude,
-            "gender":self.gender,
-            "interests":self.interests,
-            "sexual_interests":self.sexual_interests,
-            "is_online":self.is_online,
-            "created_at":self.created_at,
-            "randnum": self.randnum
+            "groups":list(map(lambda x: x.name, self.groups)),
+            "randnum": self.randnum,
             # do not serialize the password, its a security breach
         }
 
@@ -132,6 +99,10 @@ class Messages(db.Model):
     sender_id =db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime, unique=False, nullable=True)
+    senders = db.relationship("User",  backref="sent_messages",  foreign_keys=[sender_id])
+    revievers = db.relationship("User",  backref="recieved_messages",  foreign_keys=[receiver_id])
+
+
 
     def __repr__(self):
         return f'<Messages {self.id}>'

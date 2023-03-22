@@ -12,6 +12,13 @@ export const Home = () => {
     <div>
       <Navbar />
       <div className="text-center height-controller">
+        {/* <button
+          onClick={() =>
+            console.log(store.filters.isOnline, "this is the onlinefilter")
+          }
+        >
+          hello
+        </button> */}
         <Map />
       </div>
       <Footer />

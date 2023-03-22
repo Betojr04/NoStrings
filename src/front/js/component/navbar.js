@@ -73,7 +73,7 @@ export const Navbar = () => {
 
           <ProfileModal
             showProfileModal={showProfileModal}
-            user={store.loggedInUser}
+            user={store.openedUser || store.loggedInUser}
           />
 
           {profile && <div className="boxTest"></div>}

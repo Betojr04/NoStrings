@@ -8,7 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loggedInUser: null,
       users: [],
       anonUsers: [],
-
+      openedProfile: null,
       filters: {
         gender: null,
         genderF: null,

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Messages,AnonUser
+from api.models import db, User, Messages
 from api.utils import generate_sitemap, APIException
 import hashlib
 from datetime import datetime
@@ -30,12 +30,13 @@ def handle_hello():
 
 @api.route('/createaccount', methods=['POST'])
 def create_account():
+
     body = request.get_json(force = True)
     email = body['email']
     password = hashlib.sha256(body['password'].encode("utf-8")).hexdigest()
     has_email = User.query.filter_by(email = email).first()
     if has_email is None:
-        new_user = User(email = email, password = password, is_active = True, created_at = datetime.now())
+        new_user = User(email = email, password = password, is_active = True, created_at = datetime.now(),randnum = random.randint(0,9999999))
         db.session.add(new_user)
         db.session.commit()
         return jsonify('Successfully Created Account')
@@ -50,6 +51,10 @@ def Login():
     user = User.query.filter_by(email = email, password = password).first()
     if user is None:
         raise APIException('Invalid Credentials')
+
+    user.is_online= True
+    db.session.commit()
+
     access_token = create_access_token(identity = email)
     return jsonify({
         "token": access_token,
@@ -60,7 +65,8 @@ def Login():
 @api.route('/anon-login', methods=['GET'])
 def anon_login():
     randnum = random.randint(0,9999999)
-    new_user = AnonUser(randnum = randnum, is_active = True, created_at = datetime.now())
+    new_user = User(randnum = randnum, is_online= True, created_at = datetime.now())
+    print(new_user, "this is new anon user")
     db.session.add(new_user)
     db.session.commit()
     access_token = create_access_token(identity = randnum)
@@ -105,16 +111,21 @@ def validate_identity():
 @jwt_required()
 def send_Message():
     request_body=request.get_json(force=True)
-    email = get_jwt_identity()
-    user = User.query.filter_by(email=email).first()
-    print(email)
-    print(user)
+    identity = get_jwt_identity()
+    user =None
+    if not isinstance(identity, int):
+        user = User.query.filter_by(email=identity).first() 
+    else: 
+        user = User.query.filter_by(randnum=identity).first() 
+
+    print(user, request_body.get("message")) 
+    
     if user:
         message = request_body.get("message")
         sender_id = user.id
         receiver_id = request_body.get("receiver_id")
         created_at = datetime.now()
-        new_message = Messages(message=message, sender_id= sender_id, receiver_id = receiver_id, created_at = created_at)
+        new_message = Messages(message=message, sender_id = sender_id, receiver_id = receiver_id, created_at = created_at)
         db.session.add(new_message)
         db.session.commit()
         return jsonify('message sent'),200
@@ -132,7 +143,7 @@ def get_Users():
 
 @api.route('/anon-users', methods=['GET'])
 def get_Anon_Users():
-    users = AnonUser.query.all()
+    users = User.query.all()
     serialized_users =[]
     for user in users:
         serialized_user = user.serialize()
