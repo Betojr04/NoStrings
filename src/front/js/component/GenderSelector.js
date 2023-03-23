@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 function GenderSelector({ gender, setGender }) {
-  const [selection, setSelection] = useState("");
+  const {pathname} = useLocation()
   function handleGenderChange(event) {
-    setSelection(event.target.value);
+    setGender(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (selection === "") {
+    if (gender === "") {
       alert("Please select a gender");
-    } else {
-      setGender(selection);
+
     }
   }
 
@@ -45,10 +45,11 @@ function GenderSelector({ gender, setGender }) {
           Female
         </label>
       </div>
-
+      {!pathname.includes('signup')&&
       <button className="btn btn-primary" onClick={handleSubmit}>
         Continue
       </button>
+}
     </div>
   );
 }
