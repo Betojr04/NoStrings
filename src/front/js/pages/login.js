@@ -22,9 +22,6 @@ const Login = () => {
   const [ageVerified, setAgeVerified] = useState(false);
   const [genderVerified, setGenderVerified] = useState(false);
   // removed navigate link function entirely because it doesnt make sense- Alejandro
-  // if (store.users) {
-  //   navigate("/home");
-  // }
   const anonLogin = () => {
     console.log("its running");
     let result = actions.handleAnonLogin(genderVerified);
