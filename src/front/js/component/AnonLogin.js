@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import GenderSelector from "./GenderSelector";
 
 const AnonLogin = ({
@@ -8,12 +9,22 @@ const AnonLogin = ({
   setGenderVerified,
   actions,
 }) => {
-  const Navigate = useNavigate();
-  const anonLogin = () => {
-    let result = actions.handleAnonLogin(genderVerified);
+  const navigate = useNavigate();
+  const [anonError, setAnonError] = useState(null);
 
-    if (result === true) {
-      Navigate("/home");
+  const anonLogin = async () => {
+    try {
+      const result = await actions.handleAnonLogin(genderVerified);
+
+      if (result === true) {
+        navigate("/home");
+      } else {
+        setAnonError("Anonymous login failed. Please try again.");
+      }
+    } catch (error) {
+      setAnonError(
+        "An error occurred during anonymous login. Please try again."
+      );
     }
   };
 
@@ -34,7 +45,8 @@ const AnonLogin = ({
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        {/* ...rest of the AnonLogin code */}
+        {/* ...rest of the modal code */}
+        {anonError && <div className="alert alert-danger">{anonError}</div>}
       </div>
     </div>
   );
