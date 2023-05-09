@@ -45,8 +45,57 @@ const AnonLogin = ({
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        {/* ...rest of the modal code */}
-        {anonError && <div className="alert alert-danger">{anonError}</div>}
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel2">
+                Age Check
+              </h5>
+            </div>
+            <div className="modal-body2">
+              {!ageVerified ? (
+                <div className="d-flex justify-content-center align-items-center">
+                  <p>
+                    You must be over 18 years old to use this site. Please
+                    verify your age.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setAgeVerified(true);
+                    }}
+                  >
+                    I am over 18 years old
+                  </button>
+                </div>
+              ) : !genderVerified ? (
+                <GenderSelector
+                  gender={genderVerified}
+                  setGender={setGenderVerified}
+                />
+              ) : (
+                <form>
+                  <div className="modal-footer">
+                    <button
+                      onClick={() => {
+                        anonLogin();
+                      }}
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                    >
+                      Start Cruising
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+        {anonError && (
+          <div className="alert alert-danger mt-3">{anonError}</div>
+        )}
       </div>
     </div>
   );
