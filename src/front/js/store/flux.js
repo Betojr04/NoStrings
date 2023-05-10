@@ -26,6 +26,28 @@ const getState = ({ getStore, getActions, setStore }) => {
       darkMode: false,
     },
     actions: {
+      // the below is the action for the sign up component
+      createAccount: async (email, password, gender) => {
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/createaccount",
+            {
+              method: "POST",
+              body: JSON.stringify({ email, password, gender }),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to create account");
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      },
       setDarkMode: (status) => {
         const store = getStore();
         setStore({ darkMode: status });
